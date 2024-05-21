@@ -1,0 +1,58 @@
+Refund Managment System
+
+Models
+
+Member -> User,Admin
+Refund:
+
+	Refund_id
+	Order_id
+	CreatedDate
+	CreatedBy
+	ClosedDate
+	ClosedBy
+	Reason
+	Status -> Pending,Accepted,Completed,Rejected 
+	RefundStatus -> Pending,Completed,Rejected
+
+Order
+
+	OrderId
+	UserId
+	ProductId
+	Price
+	Returnable : bool
+
+Product 
+	ProductId 
+	product_name
+	currPrice
+	actPrice
+	ProductDesc
+	Returnable: bool
+
+
+USER SIDE
+---------
+
+base requirements
+Get -> View All Products
+Get -> View my Orders
+POST -> New Order
+
+project requirements
+Get -> View my Refund requests
+POST -> New Refund request - [only if the product return/refundable]
+
+
+ADMIN SIDE
+----------
+
+project requirements
+Get -> Get all Refund Request
+PUT -> On package return update Status to approved
+PUT -> On Amount Refund Completion - Update the RefundStatus - Complete
+
+
+
+
