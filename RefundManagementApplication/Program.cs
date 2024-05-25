@@ -1,3 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using RefundManagementApplication.Context;
+using RefundManagementApplication.Interfaces;
+using RefundManagementApplication.Models;
+using RefundManagementApplication.Repositories;
+using RefundManagementApplication.Services;
+using System.Text;
+
 namespace RefundManagementApplication
 {
     public class Program
@@ -11,7 +22,70 @@ namespace RefundManagementApplication
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            #region Bearer
+            builder.Services.AddSwaggerGen(option =>
+            {
+                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+                });
+                option.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] { }
+                }
+            });
+            });
+            //Debug.WriteLine(builder.Configuration["TokenKey:JWT"]);
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey:JWT"]))
+                    };
+
+                });
+
+            #endregion
+
+            #region Context
+            builder.Services.AddDbContext<RefundManagementContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnections")));
+            #endregion
+
+            #region Repos
+            builder.Services.AddScoped<IRepository<int,Member>,MemberRepository>();
+            builder.Services.AddScoped<IRepository<int,Order>,OrderRepository>();
+            builder.Services.AddScoped<IRepository<int,Product>,ProductRepository>();
+            builder.Services.AddScoped<IRepository<int,Refund>,RefundRepository>();
+            builder.Services.AddScoped<IRepository<int,User>,UserRepository>(); 
+            #endregion
+
+            #region Services
+            builder.Services.AddScoped<IUserServices,UserServices>();
+            builder.Services.AddScoped<IProductServices,ProductServices>();
+            builder.Services.AddScoped<ITokenServices,TokenServices>();
+            builder.Services.AddScoped<IActivateServices,ActivateServices>();
+            #endregion
+
 
             var app = builder.Build();
 
@@ -22,6 +96,7 @@ namespace RefundManagementApplication
                 app.UseSwaggerUI();
             }
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

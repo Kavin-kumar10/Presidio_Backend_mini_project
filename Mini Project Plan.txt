@@ -54,5 +54,44 @@ PUT -> On package return update Status to approved
 PUT -> On Amount Refund Completion - Update the RefundStatus - Complete
 
 
+ACTION PLAN
+-----------
 
+1. Members - User, Admin, Collector
+   User -> Free, Prime
 
+2. Product consists of data Returnable duration and Returnable duration for Prime user.
+
+3. On Return Request due to Certain Reason from User.
+   * Get -> Bank Details for Refund from User
+   * Collector -> Collect the product from the user and after checking for damages.
+   * Refund status -> Approved
+
+4. On Refund Status Approved the Amount Refund will be initialized by Admin. 
+   * Admin will be shown with Request that are in Approved State
+   * Admin will continue with refunding payment process 
+   * On payment success -- payment status -> Completed
+   * Refund status -> Completed
+
+Role 
+----
+
+---Collector---
+
+Get - Only Request which are at -- > Refund status : PENDING 
+Put - Update the Refund Status : APPROVED [ no product damage ] || (REJECTED [ Product Damaged ] -> REJECTED [Payment Status])
+
+---Admin---
+
+Get - Can get both Request which are Refund status : PENDING && APPROVED
+Put - Update the Refund Status : COMPLETED && PaymentStatus : COMPLETED
+
+#which updates the ClosedBy : AdminId 
+
+---User---
+
+POST - User can order product and can return due to certain Reason. 
+[#note products need to be returnable and the return request date should be within specified duration in product] 
+[#note Prime users can get special returnable options for products which free user cannot]  
+
+Get -  can get the status of his Refund request
