@@ -3,56 +3,52 @@
   "WorkspaceRootPath": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Migrations\\20240525115141_AddedCountInProductRefundStatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:RefundManagementApplication\\Migrations\\20240525115141_AddedCountInProductRefundStatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\models\\refund.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\models\\refund.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\controllers\\refundcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\controllers\\refundcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\services\\baseservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\services\\baseservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\models\\member.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\models\\member.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\services\\orderservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\services\\orderservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\repositories\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\repositories\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\interfaces\\iproductservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\interfaces\\iproductservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\repositories\\productrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\repositories\\productrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\services\\productservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\services\\productservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\controllers\\activatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\controllers\\activatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\exceptions\\usernotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\exceptions\\usernotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\exceptions\\productexceptions\\productnotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\exceptions\\productexceptions\\productnotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\interfaces\\iorderservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\interfaces\\iorderservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\services\\activateservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\services\\activateservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\services\\refundservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\services\\refundservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|c:\\users\\vc\\documents\\refundmanagementsolution\\refundmanagementapplication\\interfaces\\iservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00A311A8-04C0-4F80-A7D5-CF8424C766EE}|RefundManagementApplication\\RefundManagementApplication.csproj|solutionrelative:refundmanagementapplication\\interfaces\\iservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,171 +70,158 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20240525115141_AddedCountInProductRefundStatus.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Migrations\\20240525115141_AddedCountInProductRefundStatus.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Migrations\\20240525115141_AddedCountInProductRefundStatus.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Migrations\\20240525115141_AddedCountInProductRefundStatus.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Migrations\\20240525115141_AddedCountInProductRefundStatus.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:51:41.316Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Order.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Order.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Models\\Order.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Order.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Models\\Order.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAIwAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:51:34.244Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Member.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Member.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Models\\Member.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Member.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Models\\Member.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:51:33.055Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Product.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Product.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Models\\Product.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Product.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Models\\Product.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAApAAAA",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Program.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Program.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Program.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Program.cs",
+              "ViewState": "AQIAAEgAAAAAAAAAAAAgwFcAAABTAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:49:23.342Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "BaseRepository.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Repositories\\BaseRepository.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Repositories\\BaseRepository.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Repositories\\BaseRepository.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Repositories\\BaseRepository.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAmwBwAAAApAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:47:38.808Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ProductRepository.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Repositories\\ProductRepository.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Repositories\\ProductRepository.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Repositories\\ProductRepository.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Repositories\\ProductRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:47:34.16Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\UserController.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Controllers\\UserController.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAowAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:35:01.972Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ActivateController.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\ActivateController.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Controllers\\ActivateController.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\ActivateController.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Controllers\\ActivateController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADkAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:33:13.316Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "UserNotFoundException.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Exceptions\\UserNotFoundException.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Exceptions\\UserNotFoundException.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Exceptions\\UserNotFoundException.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Exceptions\\UserNotFoundException.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAQwBAAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:27:58.208Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ActivateServices.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\ActivateServices.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Services\\ActivateServices.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\ActivateServices.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Services\\ActivateServices.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAqwCQAAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:27:36.851Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ProductNotFoundException.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Exceptions\\ProductExceptions\\ProductNotFoundException.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Exceptions\\ProductExceptions\\ProductNotFoundException.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Exceptions\\ProductExceptions\\ProductNotFoundException.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Exceptions\\ProductExceptions\\ProductNotFoundException.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:16:01.967Z",
+              "WhenOpened": "2024-05-26T16:43:23.927Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "ProductController.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\ProductController.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Controllers\\ProductController.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\ProductController.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Controllers\\ProductController.cs",
-              "ViewState": "AQIAAFUAAAAAAAAAAAAcwF4AAAA5AAAA",
+              "Title": "IProductServices.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Interfaces\\IProductServices.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Interfaces\\IProductServices.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Interfaces\\IProductServices.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Interfaces\\IProductServices.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:09:48.615Z",
+              "WhenOpened": "2024-05-26T15:53:17.09Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IOrderServices.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Interfaces\\IOrderServices.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Interfaces\\IOrderServices.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Interfaces\\IOrderServices.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Interfaces\\IOrderServices.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAYAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T15:53:12.718Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RefundServices.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\RefundServices.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Services\\RefundServices.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\RefundServices.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Services\\RefundServices.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T15:51:24.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IServices.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Interfaces\\IServices.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Interfaces\\IServices.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Interfaces\\IServices.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Interfaces\\IServices.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T15:49:36.667Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Order.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Order.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Models\\Order.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Order.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Models\\Order.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAAABwAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T14:32:46.212Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Refund.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Refund.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Models\\Refund.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Models\\Refund.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Models\\Refund.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAxwA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T14:30:09.994Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RefundController.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\RefundController.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Controllers\\RefundController.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\RefundController.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Controllers\\RefundController.cs",
+              "ViewState": "AQIAADsAAAAAAAAAAAAwwEYAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T14:15:58.665Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Controllers\\OrderController.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Controllers\\OrderController.cs",
+              "ViewState": "AQIAAF0AAAAAAAAAAAAYwF8AAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T14:15:25.432Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "ProductServices.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\ProductServices.cs",
-              "RelativeDocumentMoniker": "RefundManagementApplication\\Services\\ProductServices.cs",
-              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\ProductServices.cs",
-              "RelativeToolTip": "RefundManagementApplication\\Services\\ProductServices.cs",
-              "ViewState": "AQIAACwAAAAAAAAAAAAIwBQAAAANAAAA",
+              "Title": "OrderServices.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\OrderServices.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Services\\OrderServices.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\OrderServices.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Services\\OrderServices.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABMAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T11:09:44.309Z",
+              "WhenOpened": "2024-05-26T13:58:55.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BaseServices.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\BaseServices.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Services\\BaseServices.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\BaseServices.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Services\\BaseServices.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAhwBEAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T13:58:54.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ActivateServices.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\ActivateServices.cs",
+              "RelativeDocumentMoniker": "RefundManagementApplication\\Services\\ActivateServices.cs",
+              "ToolTip": "C:\\Users\\VC\\Documents\\RefundManagementSolution\\RefundManagementApplication\\Services\\ActivateServices.cs",
+              "RelativeToolTip": "RefundManagementApplication\\Services\\ActivateServices.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T13:58:53.432Z",
               "EditorCaption": ""
             }
           ]

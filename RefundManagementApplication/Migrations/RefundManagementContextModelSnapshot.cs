@@ -79,7 +79,10 @@ namespace RefundManagementApplication.Migrations
             modelBuilder.Entity("RefundManagementApplication.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -102,9 +105,9 @@ namespace RefundManagementApplication.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("MemberID");
 
-                    b.HasIndex("RefundId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Orders");
                 });
@@ -197,6 +200,9 @@ namespace RefundManagementApplication.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PaymentId")
                         .HasColumnType("int");
 
@@ -214,6 +220,9 @@ namespace RefundManagementApplication.Migrations
                     b.HasKey("RefundId");
 
                     b.HasIndex("CreatedByMemberId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
 
                     b.ToTable("Refunds");
                 });
@@ -244,7 +253,7 @@ namespace RefundManagementApplication.Migrations
                 {
                     b.HasOne("RefundManagementApplication.Models.Member", "OrderedBy")
                         .WithMany("orders")
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("MemberID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -253,12 +262,6 @@ namespace RefundManagementApplication.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("RefundManagementApplication.Models.Refund", "OrderRefund")
-                        .WithMany()
-                        .HasForeignKey("RefundId");
-
-                    b.Navigation("OrderRefund");
 
                     b.Navigation("OrderedBy");
 
@@ -273,7 +276,15 @@ namespace RefundManagementApplication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RefundManagementApplication.Models.Order", "order")
+                        .WithOne("OrderRefund")
+                        .HasForeignKey("RefundManagementApplication.Models.Refund", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CreatedByMember");
+
+                    b.Navigation("order");
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.User", b =>
@@ -290,6 +301,12 @@ namespace RefundManagementApplication.Migrations
             modelBuilder.Entity("RefundManagementApplication.Models.Member", b =>
                 {
                     b.Navigation("orders");
+                });
+
+            modelBuilder.Entity("RefundManagementApplication.Models.Order", b =>
+                {
+                    b.Navigation("OrderRefund")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

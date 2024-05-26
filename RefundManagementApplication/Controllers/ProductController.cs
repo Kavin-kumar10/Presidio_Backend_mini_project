@@ -12,8 +12,8 @@ namespace RefundManagementApplication.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        IProductServices _service;
-        public ProductController(IProductServices service) { 
+        IServices<int, Product> _service;
+        public ProductController(IServices<int,Product> service) { 
             _service = service;
         }
 
@@ -24,12 +24,12 @@ namespace RefundManagementApplication.Controllers
         {
             try
             {
-                var result = await _service.GetAllProducts();
+                var result = await _service.GetAll();
                 return Ok(result);
             }
-            catch (ProductNotFoundException pnfe)
+            catch (NotFoundException nfe)
             {
-                return BadRequest(new ErrorModel(404,pnfe.Message));
+                return BadRequest(new ErrorModel(404,nfe.Message));
             }
         }
 
@@ -41,12 +41,12 @@ namespace RefundManagementApplication.Controllers
         {
             try
             {
-                var result = await _service.GetProductById(ProductId);
+                var result = await _service.GetById(ProductId);
                 return Ok(result);
             }
-            catch (UnableToCreateException utce)
+            catch (NotFoundException nfe)
             {
-                return BadRequest(new ErrorModel(404, utce.Message));
+                return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }
 
@@ -58,7 +58,7 @@ namespace RefundManagementApplication.Controllers
         {
             try
             {
-                var result = await _service.CreateProduct(product);
+                var result = await _service.Create(product);
                 return Ok(result);
             }
             catch (UnableToCreateException utce)
@@ -75,12 +75,12 @@ namespace RefundManagementApplication.Controllers
         {
             try
             {
-                var result = await _service.UpdateProduct(product);
+                var result = await _service.Update(product);
                 return Ok(result);
             }
-            catch (ProductNotFoundException pnfe)
+            catch (NotFoundException nfe)
             {
-                return BadRequest(new ErrorModel(404, pnfe.Message));
+                return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }
 
@@ -88,16 +88,16 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Product>> Delete(Product product)
+        public async Task<ActionResult<Product>> Delete(int productKey)
         {
             try
             {
-                var result = await _service.DeleteProduct(product);
+                var result = await _service.Delete(productKey);
                 return Ok(result);
             }
-            catch (ProductNotFoundException pnfe)
+            catch (NotFoundException nfe)
             {
-                return BadRequest(new ErrorModel(404, pnfe.Message));
+                return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }
     }

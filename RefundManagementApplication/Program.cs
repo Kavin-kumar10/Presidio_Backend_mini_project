@@ -81,9 +81,13 @@ namespace RefundManagementApplication
 
             #region Services
             builder.Services.AddScoped<IUserServices,UserServices>();
-            builder.Services.AddScoped<IProductServices,ProductServices>();
+            //builder.Services.AddScoped<IProductServices,ProductServices>();
             builder.Services.AddScoped<ITokenServices,TokenServices>();
             builder.Services.AddScoped<IActivateServices,ActivateServices>();
+            builder.Services.AddScoped<IServices<int, Order>, OrderServices>();
+            builder.Services.AddScoped<IServices<int, Product>, ProductServices>();
+            builder.Services.AddScoped<IServices<int, Refund>, RefundServices>();
+            builder.Services.AddScoped<IOrderServices,OrderServices>();
             #endregion
 
 

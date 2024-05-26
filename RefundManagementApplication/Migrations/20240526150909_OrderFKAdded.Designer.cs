@@ -12,8 +12,8 @@ using RefundManagementApplication.Context;
 namespace RefundManagementApplication.Migrations
 {
     [DbContext(typeof(RefundManagementContext))]
-    [Migration("20240524044200_AddModels")]
-    partial class AddModels
+    [Migration("20240526150909_OrderFKAdded")]
+    partial class OrderFKAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace RefundManagementApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Member");
+                    b.ToTable("Members");
 
                     b.HasData(
                         new
@@ -81,7 +81,10 @@ namespace RefundManagementApplication.Migrations
             modelBuilder.Entity("RefundManagementApplication.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -89,10 +92,14 @@ namespace RefundManagementApplication.Migrations
                     b.Property<int>("MemberID")
                         .HasColumnType("int");
 
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RefundId")
+                    b.Property<int?>("RefundId")
                         .HasColumnType("int");
 
                     b.Property<double>("TotalPrice")
@@ -100,9 +107,76 @@ namespace RefundManagementApplication.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("RefundId");
+                    b.HasIndex("MemberID");
 
-                    b.ToTable("Order");
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("RefundManagementApplication.Models.Payment", b =>
+                {
+                    b.Property<int>("PaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"), 1L, 1);
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RefundId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalPayment")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PaymentId");
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("RefundManagementApplication.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+
+                    b.Property<float>("Act_price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Curr_price")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Returnable")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReturnableForPrime")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.Refund", b =>
@@ -128,9 +202,11 @@ namespace RefundManagementApplication.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PaymentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Reason")
                         .IsRequired()
@@ -147,26 +223,51 @@ namespace RefundManagementApplication.Migrations
 
                     b.HasIndex("CreatedByMemberId");
 
-                    b.ToTable("Refund");
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("Refunds");
+                });
+
+            modelBuilder.Entity("RefundManagementApplication.Models.User", b =>
+                {
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Password")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordHashKey")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MemberId");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.Order", b =>
                 {
                     b.HasOne("RefundManagementApplication.Models.Member", "OrderedBy")
                         .WithMany("orders")
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("MemberID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RefundManagementApplication.Models.Refund", "OrderRefund")
+                    b.HasOne("RefundManagementApplication.Models.Product", "product")
                         .WithMany()
-                        .HasForeignKey("RefundId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OrderRefund");
-
                     b.Navigation("OrderedBy");
+
+                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.Refund", b =>
@@ -177,12 +278,37 @@ namespace RefundManagementApplication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RefundManagementApplication.Models.Order", "order")
+                        .WithOne("OrderRefund")
+                        .HasForeignKey("RefundManagementApplication.Models.Refund", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CreatedByMember");
+
+                    b.Navigation("order");
+                });
+
+            modelBuilder.Entity("RefundManagementApplication.Models.User", b =>
+                {
+                    b.HasOne("RefundManagementApplication.Models.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.Member", b =>
                 {
                     b.Navigation("orders");
+                });
+
+            modelBuilder.Entity("RefundManagementApplication.Models.Order", b =>
+                {
+                    b.Navigation("OrderRefund")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

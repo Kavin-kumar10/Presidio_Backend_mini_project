@@ -22,13 +22,24 @@ namespace RefundManagementApplication.Context
                 new Member() { Id = 103, email = "raju@gmail.com",Name = "Raju",Role="Collector"}
             );
 
-            modelBuilder.Entity<Member>()
-                .HasMany(m => m.orders)
-                .WithOne(o => o.OrderedBy)
-                .HasForeignKey(m => m.OrderId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
+            //modelBuilder.Entity<Member>()
+            //    .HasMany(m => m.orders)
+            //    .WithOne(o => o.OrderedBy)
+            //    .HasForeignKey(m => m.OrderId)
+            //    .OnDelete(DeleteBehavior.Restrict)
+            //    .IsRequired();
 
+            modelBuilder.Entity<Member>()
+              .HasMany(m => m.orders) // 'orders' refers to the collection of orders for a member
+              .WithOne(o => o.OrderedBy) // 'OrderedBy' refers to the member who placed the order
+              .HasForeignKey(o => o.MemberID) // Foreign key is on the Order table referencing MemberID
+              .OnDelete(DeleteBehavior.Restrict) // Restrict deletion if a member has orders
+              .IsRequired();
+
+            modelBuilder.Entity<Order>()
+              .HasOne(o => o.OrderRefund)
+              .WithOne(r => r.order)
+              .HasForeignKey<Refund>(r => r.OrderId);
         }
     }
 }
