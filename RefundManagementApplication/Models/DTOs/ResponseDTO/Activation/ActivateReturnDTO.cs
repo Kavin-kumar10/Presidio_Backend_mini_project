@@ -7,5 +7,6 @@ namespace RefundManagementApplication.Models.DTOs.ResponseDTO.Activation
         public int Id { get; set; }
         public string Status { get; set; }
         public MemberRole Role { get; set; }
+        public Plan Membership {  get; set; }
     }
 }

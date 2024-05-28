@@ -25,11 +25,11 @@ namespace RefundManagementApplication.Controllers
         [ProducesResponseType(typeof(ActivateReturnDTO),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel),StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<ActivateReturnDTO>> ActivateUser(int MemberId,MemberRole role)
+        public async Task<ActionResult<ActivateReturnDTO>> ActivateUser(int MemberId,MemberRole role,Plan plan)
         {
             try
             {
-                var res = await _service.Activate(MemberId,role);
+                var res = await _service.Activate(MemberId,role,plan);
                 return Ok(res);
             }
             catch (NotFoundException unfe) {

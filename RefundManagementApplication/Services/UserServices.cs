@@ -71,6 +71,12 @@ namespace RefundManagementApplication.Services
         {
             Member member = new Member();
             User user = new User();
+            var allMember = await _memrepo.Get();
+            var check = allMember.FirstOrDefault(m => m.email == registerRequestDTO.email);
+            if (check != null)
+            {
+                throw new MemberWithMailIdAlreadyFound();
+            }
             try
             {
                 member = new Member();
@@ -84,7 +90,6 @@ namespace RefundManagementApplication.Services
                 return member;
             }
             catch (Exception ex) {
-                throw new Exception();
             }
             //if (user == null)
             //    await RevertMemberInsert(member);

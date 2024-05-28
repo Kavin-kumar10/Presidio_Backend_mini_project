@@ -1,3 +1,19 @@
+// Register
+
+--> Register new user
+--> Will not allow duplicated email id
+
+//Activation - (only Admin)
+
+--> params (memberid,Role,Membership)
+Role -> User, Admin, Collector
+
+//Create an order
+
+//Request for Refund
+
+
+
 Refund Managment System
 
 Models

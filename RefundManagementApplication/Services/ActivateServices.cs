@@ -17,15 +17,17 @@ namespace RefundManagementApplication.Services
             _userRepo = userrepo;
             _memRepo = memRepo;
         }
-        public async Task<ActivateReturnDTO> Activate(int MemberId,MemberRole Role)
+        public async Task<ActivateReturnDTO> Activate(int MemberId,MemberRole Role, Plan plan)
         {
             ActivateReturnDTO returnDTO = new ActivateReturnDTO();
-            var reqUser = await _userRepo.Get(MemberId);
-            var reqMember = await _memRepo.Get(MemberId);
+            var reqUser = await _userRepo.Get(MemberId); // Activating Member
+            var reqMember = await _memRepo.Get(MemberId); // Providing Role and Plan to Member
             if(reqMember != null) {
                 reqMember.Role = Role;
+                reqMember.Membership = plan;
                 await _memRepo.Update(reqMember);
                 returnDTO.Role = Role;
+                returnDTO.Membership = plan;
             }
             if (reqUser != null) {
                 reqUser.Status = "Active";

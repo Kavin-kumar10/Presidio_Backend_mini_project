@@ -6,7 +6,7 @@ namespace RefundManagementApplication.Interfaces
 {
     public interface IActivateServices
     {
-        public Task<ActivateReturnDTO> Activate(int MemberId,MemberRole Role);
+        public Task<ActivateReturnDTO> Activate(int MemberId,MemberRole Role,Plan plan);
         public Task<ActivateReturnDTO> Deactivate(int MemberId);
     }
 }

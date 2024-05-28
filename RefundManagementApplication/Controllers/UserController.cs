@@ -25,6 +25,7 @@ namespace RefundManagementApplication.Controllers
         [HttpPost]
         [Route("Register")]
         [ProducesResponseType (typeof(Member),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status403Forbidden)]
         [ProducesResponseType (typeof(ErrorModel),StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<Member>> Register(RegisterRequestDTO registerrequestDTO)
         {
@@ -32,6 +33,10 @@ namespace RefundManagementApplication.Controllers
             {
                 var result =  await _service.Register(registerrequestDTO);
                 return Ok(result);
+            }
+            catch(MemberWithMailIdAlreadyFound mmaf)
+            {
+                return BadRequest(new ErrorModel(403, mmaf.Message));
             }
             catch (UnableToRegisterException utre) {
                 return BadRequest(new ErrorModel(401, utre.Message));
