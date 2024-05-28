@@ -1,8 +1,11 @@
 ﻿using RefundManagementApplication.Exceptions;
+using RefundManagementApplication.Exceptions.ActivationExceptions;
+using RefundManagementApplication.Exceptions.AuthExceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.RequestDTO.AuthReqDTOs;
 using RefundManagementApplication.Models.DTOs.ResponseDTO.LoginResponseDTOs;
+using RefundManagementApplication.Models.Enums;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -47,7 +50,7 @@ namespace RefundManagementApplication.Services
         {
             LoginReturnDTO returnDTO = new LoginReturnDTO();
             returnDTO.MemberID = member.Id;
-            returnDTO.Role = member.Role ?? "User";
+            returnDTO.Role = member.Role;
             returnDTO.Token = _tokenServices.GenerateToken(member);
             return returnDTO;
         }
@@ -66,14 +69,14 @@ namespace RefundManagementApplication.Services
 
         public async Task<Member> Register(RegisterRequestDTO registerRequestDTO)
         {
-            Member member = null;
-            User user = null;
+            Member member = new Member();
+            User user = new User();
             try
             {
                 member = new Member();
                 member.email = registerRequestDTO.email;
                 member.Name = registerRequestDTO.Name;
-                member.Role = "User";
+                member.Role = MemberRole.User;
                 member = await _memrepo.Add(member);
                 user = await MapRegisterRequestDTOtoUser(registerRequestDTO);
                 user.MemberId = member.Id;

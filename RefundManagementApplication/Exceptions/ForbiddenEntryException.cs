@@ -3,20 +3,18 @@
 namespace RefundManagementApplication.Exceptions
 {
     [Serializable]
-    internal class UserNotActiveException : Exception
+    internal class ForbiddenEntryException : Exception
     {
         string message;
-        public UserNotActiveException()
+        public ForbiddenEntryException()
         {
-            message = "User Not Active";
+            message = "The requested operation is forbidden";
         }
 
-        public UserNotActiveException(string? message) : base(message)
+        public ForbiddenEntryException(string? message) : base(message)
         {
             this.message = message;
         }
-
         public override string Message => message;
-
     }
 }

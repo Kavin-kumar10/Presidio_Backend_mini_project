@@ -2,7 +2,9 @@ Refund Managment System
 
 Models
 
-Member -> User,Admin
+Member -> User,Collector,Admin
+User -> Free, Prime
+
 Refund:
 
 	Refund_id

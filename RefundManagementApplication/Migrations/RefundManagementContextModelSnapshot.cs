@@ -30,16 +30,15 @@ namespace RefundManagementApplication.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Membership")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Membership")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -53,25 +52,25 @@ namespace RefundManagementApplication.Migrations
                         new
                         {
                             Id = 101,
-                            Membership = "Free",
+                            Membership = 0,
                             Name = "Kavin",
-                            Role = "Admin",
+                            Role = 0,
                             email = "kavinkumar.prof@gmail.com"
                         },
                         new
                         {
                             Id = 102,
-                            Membership = "Free",
+                            Membership = 0,
                             Name = "Pravin",
-                            Role = "Admin",
+                            Role = 2,
                             email = "pravinkumar.prof@gmail.com"
                         },
                         new
                         {
                             Id = 103,
-                            Membership = "Free",
+                            Membership = 0,
                             Name = "Raju",
-                            Role = "Collector",
+                            Role = 1,
                             email = "raju@gmail.com"
                         });
                 });
@@ -90,9 +89,8 @@ namespace RefundManagementApplication.Migrations
                     b.Property<int>("MemberID")
                         .HasColumnType("int");
 
-                    b.Property<string>("OrderStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -108,6 +106,10 @@ namespace RefundManagementApplication.Migrations
                     b.HasIndex("MemberID");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("RefundId")
+                        .IsUnique()
+                        .HasFilter("[RefundId] IS NOT NULL");
 
                     b.ToTable("Orders");
                 });
@@ -175,6 +177,30 @@ namespace RefundManagementApplication.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 101,
+                            Act_price = 1200f,
+                            Count = 10,
+                            Curr_price = 1000f,
+                            Description = "Sportsman Products",
+                            Returnable = 7,
+                            ReturnableForPrime = 14,
+                            Title = "Soccor Football Nivia"
+                        },
+                        new
+                        {
+                            ProductId = 102,
+                            Act_price = 1000f,
+                            Count = 50,
+                            Curr_price = 899f,
+                            Description = "ANC Tws airdopes",
+                            Returnable = 0,
+                            ReturnableForPrime = 7,
+                            Title = "Noice TWS"
+                        });
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.Refund", b =>
@@ -185,16 +211,16 @@ namespace RefundManagementApplication.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RefundId"), 1L, 1);
 
-                    b.Property<int>("ClosedBy")
+                    b.Property<int?>("ClosedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("ClosedByMember")
+                    b.Property<int?>("ClosedByMemberId")
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedByMemberId")
+                    b.Property<int?>("CreatedByMemberId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -206,6 +232,9 @@ namespace RefundManagementApplication.Migrations
                     b.Property<int?>("PaymentId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PaymentId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -213,16 +242,16 @@ namespace RefundManagementApplication.Migrations
                     b.Property<double>("RefundAmount")
                         .HasColumnType("float");
 
-                    b.Property<string>("RefundStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RefundStatus")
+                        .HasColumnType("int");
 
                     b.HasKey("RefundId");
 
+                    b.HasIndex("ClosedByMemberId");
+
                     b.HasIndex("CreatedByMemberId");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("PaymentId1");
 
                     b.ToTable("Refunds");
                 });
@@ -263,28 +292,37 @@ namespace RefundManagementApplication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RefundManagementApplication.Models.Refund", "Refund")
+                        .WithOne("Order")
+                        .HasForeignKey("RefundManagementApplication.Models.Order", "RefundId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("OrderedBy");
+
+                    b.Navigation("Refund");
 
                     b.Navigation("product");
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.Refund", b =>
                 {
+                    b.HasOne("RefundManagementApplication.Models.Member", "ClosedByMember")
+                        .WithMany()
+                        .HasForeignKey("ClosedByMemberId");
+
                     b.HasOne("RefundManagementApplication.Models.Member", "CreatedByMember")
                         .WithMany()
-                        .HasForeignKey("CreatedByMemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedByMemberId");
 
-                    b.HasOne("RefundManagementApplication.Models.Order", "order")
-                        .WithOne("OrderRefund")
-                        .HasForeignKey("RefundManagementApplication.Models.Refund", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("RefundManagementApplication.Models.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId1");
+
+                    b.Navigation("ClosedByMember");
 
                     b.Navigation("CreatedByMember");
 
-                    b.Navigation("order");
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.User", b =>
@@ -303,10 +341,9 @@ namespace RefundManagementApplication.Migrations
                     b.Navigation("orders");
                 });
 
-            modelBuilder.Entity("RefundManagementApplication.Models.Order", b =>
+            modelBuilder.Entity("RefundManagementApplication.Models.Refund", b =>
                 {
-                    b.Navigation("OrderRefund")
-                        .IsRequired();
+                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

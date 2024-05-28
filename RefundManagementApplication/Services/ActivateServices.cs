@@ -1,23 +1,35 @@
 ﻿using RefundManagementApplication.Exceptions;
+using RefundManagementApplication.Exceptions.AuthExceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.ResponseDTO.Activation;
+using RefundManagementApplication.Models.Enums;
+using System.Data;
 
 namespace RefundManagementApplication.Services
 {
     public class ActivateServices : IActivateServices
     {
-        private IRepository<int, User> _repo;
-        public ActivateServices(IRepository<int,User> repo) { 
-            _repo = repo;
+        private IRepository<int, User> _userRepo;
+        private IRepository<int, Member> _memRepo;
+
+        public ActivateServices(IRepository<int,User> userrepo,IRepository<int,Member> memRepo) { 
+            _userRepo = userrepo;
+            _memRepo = memRepo;
         }
-        public async Task<ActivateReturnDTO> Activate(int MemberId)
+        public async Task<ActivateReturnDTO> Activate(int MemberId,MemberRole Role)
         {
             ActivateReturnDTO returnDTO = new ActivateReturnDTO();
-            var reqMem = await _repo.Get(MemberId);
-            if (reqMem != null) {
-                reqMem.Status = "Active";
-                var res = await _repo.Update(reqMem);
+            var reqUser = await _userRepo.Get(MemberId);
+            var reqMember = await _memRepo.Get(MemberId);
+            if(reqMember != null) {
+                reqMember.Role = Role;
+                await _memRepo.Update(reqMember);
+                returnDTO.Role = Role;
+            }
+            if (reqUser != null) {
+                reqUser.Status = "Active";
+                var res = await _userRepo.Update(reqUser);
                 returnDTO.Id = res.MemberId;
                 returnDTO.Status = res.Status;
                 return returnDTO;
@@ -28,13 +40,15 @@ namespace RefundManagementApplication.Services
         public async Task<ActivateReturnDTO> Deactivate(int MemberId)
         {
             ActivateReturnDTO returnDTO = new ActivateReturnDTO();
-            var reqMem = await _repo.Get(MemberId);
-            if (reqMem != null)
+            var reqUser = await _userRepo.Get(MemberId);
+            var reqMember = await _memRepo.Get(MemberId);
+            if (reqUser != null)
             {
-                reqMem.Status = "Disabled";
-                var res = await _repo.Update(reqMem);
+                reqUser.Status = "Disabled";
+                var res = await _userRepo.Update(reqUser);
                 returnDTO.Id = res.MemberId;
                 returnDTO.Status = res.Status;
+                returnDTO.Role = reqMember.Role;
                 return returnDTO;
             }
             throw new UserNotFoundException();

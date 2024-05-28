@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RefundManagementApplication.Exceptions;
-using RefundManagementApplication.Exceptions.ProductExceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 
@@ -49,6 +48,25 @@ namespace RefundManagementApplication.Controllers
                 return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("MultiData")]
+        [ProducesResponseType(typeof(IList<Product>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IList<Product>>> CreateMultipleEntity(IList<Product> products)
+        {
+            try
+            {
+                var result = await _service.CreateMultiple(products);
+                return Ok(result);
+            }
+            catch (UnableToCreateException utce)
+            {
+                return BadRequest(new ErrorModel(404, utce.Message));
+            }
+        }
+
 
         [HttpPost]
         [Authorize(Roles = "Admin")]

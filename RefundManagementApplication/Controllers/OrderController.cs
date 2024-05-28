@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RefundManagementApplication.Exceptions.ProductExceptions;
 using RefundManagementApplication.Exceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.RequestDTO.OrderReqDTOs;
+using RefundManagementApplication.Models.Enums;
 
 namespace RefundManagementApplication.Controllers
 {
@@ -15,12 +15,86 @@ namespace RefundManagementApplication.Controllers
     {
         private IServices<int, Order> _service;
         private IServices<int,Product> _productService;
+        private IOrderServices _orderService;
 
-        public OrderController(IServices<int, Order> service,IServices<int,Product> productService)
+        public OrderController(IServices<int, Order> service,IServices<int,Product> productService,IOrderServices orderServices)
         {
             _service = service;
+            _orderService = orderServices;  
             _productService = productService;
         }
+
+        // Function Specific Operations
+
+        [HttpGet]
+        [Authorize(Roles = "Collector")]
+        [Route("GetPendingRefund")]
+        [ProducesResponseType(typeof(IEnumerable<Order>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+
+        // Get Pending Products only for Collector - for further product Retrival process
+        public async Task<ActionResult<IEnumerable<Order>>> GetPendingRefund()
+        {
+            try
+            {
+                var result = await _orderService.GetAllRefundDecisionPendingOrders();
+                return Ok(result);
+            }
+            catch (NotFoundException nfe)
+            {
+                return BadRequest(new ErrorModel(404, nfe.Message));
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [Route("GetAcceptedRefund")]
+        [ProducesResponseType(typeof(IEnumerable<Order>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+
+        // Get Pending Products only for Collector - for further product Retrival process
+        public async Task<ActionResult<IEnumerable<Order>>> GetAcceptedRefund()
+        {
+            try
+            {
+                var result = await _orderService.GetAllRefundDecisionAcceptedOrders();
+                return Ok(result);
+            }
+            catch (NotFoundException nfe)
+            {
+                return BadRequest(new ErrorModel(404, nfe.Message));
+            }
+        }
+
+
+        [HttpPost]
+        [Route("RefundDecision")]
+        [Authorize(Roles = "Collector")]
+        [ProducesResponseType(typeof(Order), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+
+        // Accept or Reject the Product
+        public async Task<ActionResult<Order>> RefundRequestDecision(int OrderId,bool decision)
+        {
+            try
+            {
+                var reqOrder = await _service.GetById(OrderId);
+                if (decision)
+                    reqOrder.OrderStatus = OrderStatuses.Refund_Accepted;
+                else
+                    reqOrder.OrderStatus = OrderStatuses.Refund_Rejected;
+                var result = await _service.Update(reqOrder);
+                return Ok(result);
+            }
+            catch(NotFoundException nfe)
+            {
+                return BadRequest(new ErrorModel(404,nfe.Message));
+            }
+        }
+
+
+
+        // Basic Crud operation
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Order>), StatusCodes.Status200OK)]

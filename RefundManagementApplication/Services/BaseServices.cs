@@ -1,5 +1,4 @@
 ﻿using RefundManagementApplication.Exceptions;
-using RefundManagementApplication.Exceptions.ProductExceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 
@@ -13,14 +12,29 @@ namespace RefundManagementApplication.Services
         {
             _repo = repo;
         }
-        public async Task<T> Create(T Entity)
+
+        public async Task<IList<T>> CreateMultiple(IList<T> Entities)
+        {
+            IList<T> list = new List<T>();  
+            foreach(var entity in Entities)
+            {
+                var result = await _repo.Add(entity);
+                list.Add(result);
+            }
+            if(list != null)
+            {
+                return Entities;
+            }
+            throw new UnableToCreateException();
+        }
+        public async virtual Task<T> Create(T Entity)
         {
             var result = await _repo.Add(Entity);
             if (result != null)
             {
                 return result;
             }
-            throw new NotImplementedException();
+            throw new UnableToCreateException();
         }
 
         public Task<T> Delete(int Key)
@@ -44,11 +58,11 @@ namespace RefundManagementApplication.Services
         public async Task<T> GetById(int Key)
         {
             var result = await _repo.Get(Key);
-            if (result != null)
+            if (result == null)
             {
-                return result;
+                throw new NotFoundException();
             }
-            throw new NotFoundException();
+            return result;
         }
 
         public Task<T> Update(T Entity)

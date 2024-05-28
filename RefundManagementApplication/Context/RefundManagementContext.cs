@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RefundManagementApplication.Models;
+using RefundManagementApplication.Models.Enums;
 
 namespace RefundManagementApplication.Context
 {
@@ -17,9 +18,18 @@ namespace RefundManagementApplication.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Member>().HasData(
-                new Member() {  Id= 101, email="kavinkumar.prof@gmail.com",Name = "Kavin", Role="Admin" },
-                new Member() {  Id = 102,email="pravinkumar.prof@gmail.com",Name = "Pravin", Role="Admin" },
-                new Member() { Id = 103, email = "raju@gmail.com",Name = "Raju",Role="Collector"}
+                new Member() {  Id= 101, email="kavinkumar.prof@gmail.com",Name = "Kavin", Role=MemberRole.User },
+                new Member() {  Id = 102,email="pravinkumar.prof@gmail.com",Name = "Pravin", Role=MemberRole.Admin },
+                new Member() {  Id = 103, email = "raju@gmail.com",Name = "Raju",Role=MemberRole.Collector}
+            );
+
+            modelBuilder.Entity<Product>().HasData(
+                new Product() { ProductId = 101, Title = "Soccor Football Nivia", Description = "Sportsman Products", Act_price = 1200, Curr_price = 1000, Count = 10, Returnable = 7, ReturnableForPrime = 14 },
+                new Product() { ProductId = 102, Title = "Noice TWS", Description = "ANC Tws airdopes", Act_price = 1000, Curr_price = 899, Count = 50, Returnable = 0, ReturnableForPrime = 7 }
+            );
+
+            modelBuilder.Entity<Order>().HasData(
+                new Order() { OrderId = 1,MemberID = 101,CreatedDate=DateTime.Now,OrderStatus=OrderStatuses.Ordered,ProductId = 101,TotalPrice = 1000}
             );
 
             //modelBuilder.Entity<Member>()
@@ -30,16 +40,23 @@ namespace RefundManagementApplication.Context
             //    .IsRequired();
 
             modelBuilder.Entity<Member>()
-              .HasMany(m => m.orders) // 'orders' refers to the collection of orders for a member
-              .WithOne(o => o.OrderedBy) // 'OrderedBy' refers to the member who placed the order
-              .HasForeignKey(o => o.MemberID) // Foreign key is on the Order table referencing MemberID
-              .OnDelete(DeleteBehavior.Restrict) // Restrict deletion if a member has orders
+              .HasMany(m => m.orders) 
+              .WithOne(o => o.OrderedBy) 
+              .HasForeignKey(o => o.MemberID) 
+              .OnDelete(DeleteBehavior.Restrict) 
               .IsRequired();
+            
+            modelBuilder.Entity<Refund>()
+                .HasOne(r => r.Order)
+                .WithOne(o => o.Refund)
+                .HasForeignKey<Refund>(r => r.OrderId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<Order>()
-              .HasOne(o => o.OrderRefund)
-              .WithOne(r => r.order)
-              .HasForeignKey<Refund>(r => r.OrderId);
+                .HasOne(o => o.Refund)
+                .WithOne(r => r.Order)
+                .HasForeignKey<Order>(o => o.RefundId);
+
         }
     }
 }

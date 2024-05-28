@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RefundManagementApplication.Exceptions;
+using RefundManagementApplication.Exceptions.ActivationExceptions;
+using RefundManagementApplication.Exceptions.AuthExceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.RequestDTO.AuthReqDTOs;

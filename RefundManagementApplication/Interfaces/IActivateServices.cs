@@ -1,11 +1,12 @@
 ﻿using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.ResponseDTO.Activation;
+using RefundManagementApplication.Models.Enums;
 
 namespace RefundManagementApplication.Interfaces
 {
     public interface IActivateServices
     {
-        public Task<ActivateReturnDTO> Activate(int MemberId);
+        public Task<ActivateReturnDTO> Activate(int MemberId,MemberRole Role);
         public Task<ActivateReturnDTO> Deactivate(int MemberId);
     }
 }

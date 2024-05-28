@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace RefundManagementApplication.Exceptions
+namespace RefundManagementApplication.Exceptions.AuthExceptions
 {
     [Serializable]
     internal class UserNotFoundException : Exception

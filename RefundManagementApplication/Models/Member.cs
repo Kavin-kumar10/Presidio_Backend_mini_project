@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using RefundManagementApplication.Models.Enums;
 
 namespace RefundManagementApplication.Models
 {
@@ -8,8 +9,8 @@ namespace RefundManagementApplication.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string email { get; set; }
-        public string Role { get; set; } = "User";
-        public string? Membership { get; set; } = "Free";
+        public MemberRole Role { get; set; } = MemberRole.User;
+        public Plan Membership { get; set; } = Plan.Free;
         public IList<Order> orders { get; set; }
     }
 }

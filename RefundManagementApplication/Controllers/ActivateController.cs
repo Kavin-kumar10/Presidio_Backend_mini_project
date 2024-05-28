@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using RefundManagementApplication.Exceptions;
-using RefundManagementApplication.Exceptions.ProductExceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.ResponseDTO.Activation;
+using RefundManagementApplication.Models.Enums;
 
 namespace RefundManagementApplication.Controllers
 {
@@ -24,14 +25,14 @@ namespace RefundManagementApplication.Controllers
         [ProducesResponseType(typeof(ActivateReturnDTO),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel),StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<ActivateReturnDTO>> ActivateUser(int MemberId)
+        public async Task<ActionResult<ActivateReturnDTO>> ActivateUser(int MemberId,MemberRole role)
         {
             try
             {
-                var res = await _service.Activate(MemberId);
+                var res = await _service.Activate(MemberId,role);
                 return Ok(res);
             }
-            catch (ProductNotFoundException unfe) {
+            catch (NotFoundException unfe) {
                 return BadRequest(new ErrorModel(404,unfe.Message));
             }
         }
@@ -51,7 +52,7 @@ namespace RefundManagementApplication.Controllers
                 var res = await _service.Deactivate(MemberId);
                 return Ok(res);
             }
-            catch (ProductNotFoundException unfe)
+            catch (NotFoundException unfe)
             {
                 return BadRequest(new ErrorModel(404, unfe.Message));
             }
