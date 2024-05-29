@@ -13,15 +13,17 @@ namespace RefundManagementApplication.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private IServices<int, Order> _service;
-        private IServices<int,Product> _productService;
-        private IOrderServices _orderService;
+        private readonly IServices<int, Order> _service;
+        private readonly IServices<int,Product> _productService;
+        private readonly ILogger<OrderController> _logger;
+        private readonly IOrderServices _orderService;
 
-        public OrderController(IServices<int, Order> service,IServices<int,Product> productService,IOrderServices orderServices)
+        public OrderController(IServices<int, Order> service,IServices<int,Product> productService,IOrderServices orderServices,ILogger<OrderController> logger)
         {
             _service = service;
             _orderService = orderServices;  
             _productService = productService;
+            _logger = logger;
         }
 
         // Function Specific Operations
@@ -42,6 +44,7 @@ namespace RefundManagementApplication.Controllers
             }
             catch (NotFoundException nfe)
             {
+                _logger.LogError(nfe.Message);
                 return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }
@@ -62,6 +65,7 @@ namespace RefundManagementApplication.Controllers
             }
             catch (NotFoundException nfe)
             {
+                _logger.LogError(nfe.Message);
                 return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }
@@ -88,6 +92,7 @@ namespace RefundManagementApplication.Controllers
             }
             catch(NotFoundException nfe)
             {
+                _logger.LogError(nfe.Message);
                 return BadRequest(new ErrorModel(404,nfe.Message));
             }
         }
@@ -108,6 +113,7 @@ namespace RefundManagementApplication.Controllers
             }
             catch (NotFoundException nfe)
             {
+                _logger.LogError(nfe.Message);
                 return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }
@@ -125,6 +131,7 @@ namespace RefundManagementApplication.Controllers
             }
             catch (UnableToCreateException utce)
             {
+                _logger.LogError(utce.Message);
                 return BadRequest(new ErrorModel(404, utce.Message));
             }
         }
@@ -149,6 +156,7 @@ namespace RefundManagementApplication.Controllers
             }
             catch (UnableToCreateException utce)
             {
+                _logger.LogError(utce.Message);
                 return BadRequest(new ErrorModel(404, utce.Message));
             }
         }
@@ -166,6 +174,7 @@ namespace RefundManagementApplication.Controllers
             }
             catch (NotFoundException nfe)
             {
+                _logger.LogError(nfe.Message);
                 return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }
@@ -183,6 +192,7 @@ namespace RefundManagementApplication.Controllers
             }
             catch (NotFoundException nfe)
             {
+                _logger.LogError(nfe.Message);
                 return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }

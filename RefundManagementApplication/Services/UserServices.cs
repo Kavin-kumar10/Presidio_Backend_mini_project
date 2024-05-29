@@ -22,6 +22,14 @@ namespace RefundManagementApplication.Services
             _userRepo = userRepo;
             _tokenServices = tokenservices;
         }
+
+        /// <summary>
+        /// Login using loginDTO -> INPUT , HashProtected compared with the Key in database 
+        /// </summary>
+        /// <param name="loginDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="UnauthorizedUserException"></exception>
+        /// <exception cref="UserNotActiveException"></exception>
         public async Task<LoginReturnDTO> Login(UserLoginDTO loginDTO)
         {
             var userDB = await _userRepo.Get(loginDTO.UserId);
@@ -67,6 +75,14 @@ namespace RefundManagementApplication.Services
             return true;
         }
 
+
+        /// <summary>
+        /// Register using RegisterRequestDTO -> INPUT, Add new User model and Member model to the database with password hashed
+        /// </summary>
+        /// <param name="registerRequestDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="MemberWithMailIdAlreadyFound"></exception>
+        /// <exception cref="UnableToRegisterException"></exception>
         public async Task<Member> Register(RegisterRequestDTO registerRequestDTO)
         {
             Member member = new Member();
@@ -95,7 +111,7 @@ namespace RefundManagementApplication.Services
             //    await RevertMemberInsert(member);
             //if (member == null)
             //    await RevertUserInsert(user);
-            throw new UnableToRegisterException("Not able to register at this moment");
+            throw new UnableToRegisterException("Unable to Register");
         }
 
         private async Task RevertUserInsert(User user)

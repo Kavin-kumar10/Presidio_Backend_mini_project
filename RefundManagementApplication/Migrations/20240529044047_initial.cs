@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RefundManagementApplication.Migrations
 {
-    public partial class ModelsAndEnum : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,35 +82,6 @@ namespace RefundManagementApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderStatus = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalPrice = table.Column<double>(type: "float", nullable: false),
-                    MemberID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Orders_Members_MemberID",
-                        column: x => x.MemberID,
-                        principalTable: "Members",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Refunds",
                 columns: table => new
                 {
@@ -142,16 +113,46 @@ namespace RefundManagementApplication.Migrations
                         principalTable: "Members",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Refunds_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Refunds_Payments_PaymentId1",
                         column: x => x.PaymentId1,
                         principalTable: "Payments",
                         principalColumn: "PaymentId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderStatus = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    RefundId = table.Column<int>(type: "int", nullable: true),
+                    RefundId1 = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalPrice = table.Column<double>(type: "float", nullable: false),
+                    MemberID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Orders_Members_MemberID",
+                        column: x => x.MemberID,
+                        principalTable: "Members",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Refunds_RefundId1",
+                        column: x => x.RefundId1,
+                        principalTable: "Refunds",
+                        principalColumn: "RefundId");
                 });
 
             migrationBuilder.InsertData(
@@ -159,8 +160,8 @@ namespace RefundManagementApplication.Migrations
                 columns: new[] { "Id", "Membership", "Name", "Role", "email" },
                 values: new object[,]
                 {
-                    { 101, 0, "Kavin", 2, "kavinkumar.prof@gmail.com" },
-                    { 102, 0, "Pravin", 0, "pravinkumar.prof@gmail.com" },
+                    { 101, 0, "Kavin", 0, "kavinkumar.prof@gmail.com" },
+                    { 102, 0, "Pravin", 2, "pravinkumar.prof@gmail.com" },
                     { 103, 0, "Raju", 1, "raju@gmail.com" }
                 });
 
@@ -173,6 +174,11 @@ namespace RefundManagementApplication.Migrations
                     { 102, 1000f, 50, 899f, "ANC Tws airdopes", 0, 7, "Noice TWS" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Orders",
+                columns: new[] { "OrderId", "CreatedDate", "MemberID", "OrderStatus", "ProductId", "RefundId", "RefundId1", "TotalPrice" },
+                values: new object[] { 1, new DateTime(2024, 5, 29, 10, 10, 46, 757, DateTimeKind.Local).AddTicks(6953), 101, 0, 101, null, null, 1000.0 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_MemberID",
                 table: "Orders",
@@ -182,6 +188,11 @@ namespace RefundManagementApplication.Migrations
                 name: "IX_Orders_ProductId",
                 table: "Orders",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_RefundId1",
+                table: "Orders",
+                column: "RefundId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Refunds_ClosedByMemberId",
@@ -194,11 +205,6 @@ namespace RefundManagementApplication.Migrations
                 column: "CreatedByMemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Refunds_OrderId",
-                table: "Refunds",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Refunds_PaymentId1",
                 table: "Refunds",
                 column: "PaymentId1");
@@ -207,22 +213,22 @@ namespace RefundManagementApplication.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Refunds");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Payments");
+                name: "Refunds");
 
             migrationBuilder.DropTable(
                 name: "Members");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Payments");
         }
     }
 }

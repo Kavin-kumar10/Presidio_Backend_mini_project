@@ -23,6 +23,9 @@ namespace RefundManagementApplication
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 
+            //builder.Services.AddLogging(l => l.AddLog4Net());
+
+
             #region Bearer
             builder.Services.AddSwaggerGen(option =>
             {
@@ -87,10 +90,10 @@ namespace RefundManagementApplication
             builder.Services.AddScoped<IServices<int, Order>, OrderServices>();
             builder.Services.AddScoped<IServices<int, Product>, ProductServices>();
             builder.Services.AddScoped<IServices<int, Refund>, RefundServices>();
-            builder.Services.AddScoped<IServices<int, Payment>, PaymentServices>();
+            //builder.Services.AddScoped<IServices<int, Payment>, PaymentServices>();
+            builder.Services.AddScoped<IPaymentServices,PaymentServices>();
             builder.Services.AddScoped<IOrderServices,OrderServices>();
             builder.Services.AddScoped<IRefundServices,RefundServices>();   
-            builder.Services.AddScoped<IPaymentServices,PaymentServices>();
             #endregion
 
 

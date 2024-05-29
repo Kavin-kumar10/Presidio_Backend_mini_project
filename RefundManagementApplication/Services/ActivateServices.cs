@@ -17,12 +17,24 @@ namespace RefundManagementApplication.Services
             _userRepo = userrepo;
             _memRepo = memRepo;
         }
+
+        /// <summary>
+        /// Activate The User based on Role and Plan -> Access -> Admin
+        /// </summary>
+        /// <param name="MemberId"></param>
+        /// <param name="Role"></param>
+        /// <param name="plan"></param>
+        /// <returns></returns>
+        /// <exception cref="UserNotFoundException"></exception>
+        
         public async Task<ActivateReturnDTO> Activate(int MemberId,MemberRole Role, Plan plan)
         {
             ActivateReturnDTO returnDTO = new ActivateReturnDTO();
             var reqUser = await _userRepo.Get(MemberId); // Activating Member
             var reqMember = await _memRepo.Get(MemberId); // Providing Role and Plan to Member
-            if(reqMember != null) {
+            if(reqUser == null || reqMember == null)
+                throw new UserNotFoundException();
+            if (reqMember != null) {
                 reqMember.Role = Role;
                 reqMember.Membership = plan;
                 await _memRepo.Update(reqMember);
@@ -39,12 +51,18 @@ namespace RefundManagementApplication.Services
             throw new UserNotFoundException();
         }
 
+        /// <summary>
+        /// Deactivate User with memberid parameter Access -> only Admin
+        /// </summary>
+        /// <param name="MemberId"></param>
+        /// <returns></returns>
+        /// <exception cref="UserNotFoundException"></exception>
         public async Task<ActivateReturnDTO> Deactivate(int MemberId)
         {
             ActivateReturnDTO returnDTO = new ActivateReturnDTO();
             var reqUser = await _userRepo.Get(MemberId);
             var reqMember = await _memRepo.Get(MemberId);
-            if (reqUser != null)
+            if (reqUser != null && reqMember != null)
             {
                 reqUser.Status = "Disabled";
                 var res = await _userRepo.Update(reqUser);

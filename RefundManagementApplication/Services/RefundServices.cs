@@ -10,23 +10,35 @@ namespace RefundManagementApplication.Services
     public class RefundServices : BaseServices<Refund>, IRefundServices
     {
         IRepository<int, Order> _orderRepo;
-        IRepository<int, Refund> _refundRepo;
+        IRepository<int, Refund> _Repo;
         IRepository<int, Member> _memberRepo;
         IRepository<int, Product> _productRepo;
         public RefundServices(IRepository<int, Refund> repo, IRepository<int, Order> orderRepo, IRepository<int, Member> memberRepo, IRepository<int, Product> productRepo) : base(repo)
         {
             _orderRepo = orderRepo;
-            _refundRepo = repo;
+            _Repo = repo;
             _memberRepo = memberRepo;
             _productRepo = productRepo;
         }
 
-
+        /// <summary>
+        /// Create Refund Only who are all applicable
+        /// Returnable time period -> Free subscription
+        /// ReturnableForPrime time period -> Prime Subscription
+        /// </summary>
+        /// <param name="OrderId"></param>
+        /// <param name="Reason"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException"></exception>
+        /// <exception cref="UnableToCreateException"></exception>
         public async Task<Refund> CreateRefund(int OrderId, string Reason)
         {
-            Order order = await _orderRepo.Get(OrderId);// To Update Based on result
-            Product product = await _productRepo.Get(order.ProductId);// To find Returnable and ReturnableForPrime
-            Member member = await _memberRepo.Get(order.MemberID);//To know the member has prime or free 
+            var order = await _orderRepo.Get(OrderId);// To Update Based on result
+            if (order == null) throw new NotFoundException("Order");
+            var product = await _productRepo.Get(order.ProductId);// To find Returnable and ReturnableForPrime
+            if (product == null) throw new NotFoundException("Product");
+            var member = await _memberRepo.Get(order.MemberID);//To know the member has prime or free 
+            if (member == null) throw new NotFoundException("Member");
             bool valid = true;
             if (member.Membership == Plan.Prime)
             {
@@ -47,15 +59,16 @@ namespace RefundManagementApplication.Services
                     RefundAmount = order.TotalPrice,
                     RefundStatus = RefundStatuses.PENDING
                 };
-                var result = await base.Create(refund);
-                //order.RefundId = result.RefundId;
-                //await _orderRepo.Update(order);
+                var result = await _Repo.Add(refund);
+                order.RefundId = result.RefundId;
+                await _orderRepo.Update(order);
                 return result;
             }
             throw new UnableToCreateException();
         }
 
-        public async Task<bool> CheckValidReturnDuration(DateTime created,int DaysValid)
+        
+        private async Task<bool> CheckValidReturnDuration(DateTime created,int DaysValid)
         {
             if (DaysValid == 0)
                 throw new ObjectIsNotReturnableException();

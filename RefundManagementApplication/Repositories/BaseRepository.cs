@@ -24,6 +24,8 @@ namespace RefundManagementApplication.Repositories
         public async Task<T> Delete(int key)
         {
             var request = await Get(key);
+            if (request == null)
+                return null;
             _context.Remove(request);
             await _context.SaveChangesAsync();
             return request;
@@ -44,6 +46,7 @@ namespace RefundManagementApplication.Repositories
         {
             _context.Update(entity);
             await _context.SaveChangesAsync();
-            return entity;        }
+            return entity;        
+        }
     }
 }

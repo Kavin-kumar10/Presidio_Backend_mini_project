@@ -103,6 +103,10 @@ namespace RefundManagementApplication.Controllers
             {
                 return BadRequest(new ErrorModel(405,rde.Message));
             }
+            catch(Exception ex)
+            {
+                return BadRequest(new ErrorModel(404,ex.Message));  
+            }
         }
 
 

@@ -37,9 +37,9 @@ namespace RefundManagementApplication.Services
             throw new UnableToCreateException();
         }
 
-        public Task<T> Delete(int Key)
+        public async Task<T> Delete(int Key)
         {
-            var result = _repo.Delete(Key);
+            var result = await _repo.Delete(Key);
             if (result != null)
                 return result;
             throw new NotFoundException();
@@ -65,9 +65,9 @@ namespace RefundManagementApplication.Services
             return result;
         }
 
-        public Task<T> Update(T Entity)
+        public async Task<T> Update(T Entity)
         {
-            var result = _repo.Update(Entity);
+            var result = await _repo.Update(Entity);
             if (result != null)
             {
                 return result;

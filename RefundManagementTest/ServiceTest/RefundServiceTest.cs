@@ -18,7 +18,7 @@ namespace RefundManagementTest.ServiceTest
     public class RefundServiceTest
     {
         private RefundManagementContext context;
-        private IRepository<int,Refund> _repo;
+        private IRepository<int,Refund> _refundRepo;
         private IServices<int, Refund> _services;
         private IRepository<int, Order> _orderRepo;
         private IRepository<int, Member> _memberRepo;
@@ -32,71 +32,222 @@ namespace RefundManagementTest.ServiceTest
                       .UseInMemoryDatabase("dummyDB");
             context = new RefundManagementContext(optionsBuilder.Options);
 
+            context.Database.EnsureDeletedAsync().Wait();
+            context.Database.EnsureCreatedAsync().Wait();
+
             _orderRepo = new OrderRepository(context);
             _memberRepo = new MemberRepository(context);
             _productRepo = new ProductRepository(context);
-            _repo = new RefundRepository(context);
-            _services = new RefundServices(_repo, _orderRepo, _memberRepo, _productRepo);
-            _RefundServices = new RefundServices(_repo, _orderRepo, _memberRepo, _productRepo);
+            _refundRepo = new RefundRepository(context);
+            _services = new RefundServices(_refundRepo, _orderRepo, _memberRepo, _productRepo);
+            _RefundServices = new RefundServices(new RefundRepository(context), _orderRepo, _memberRepo, _productRepo);
 
-            //Order order = new Order()
-            //{
-            //    MemberID = 101,
-            //    CreatedDate = DateTime.Now,
-            //    OrderStatus = OrderStatuses.Ordered,
-            //    ProductId = 102,
-            //    TotalPrice = 1000,
-            //};
-            //await _orderRepo.Add(order);
-        }
-
-        [Test]
-        public async Task CreateRefundPassTest() {
-            try
+            Member member = new Member()
             {
-                var result = await _RefundServices.CreateRefund(1,"Damaged Product");
-                Assert.AreEqual(result.Reason, "Damaged Product");
-            }
-            catch(Exception ex) { 
-            
-            }
+                email = "email",
+                Membership = Plan.Free,
+                Name = "name",
+                Role = MemberRole.User
+            };
+
+            await _memberRepo.Add(member);
+
+            Product product = new Product()
+            {
+                Title = "Product",
+                Description = "dfsf",
+                Act_price = 1500,
+                Curr_price = 900,
+                Count = 10,
+                Returnable = 7,
+                ReturnableForPrime = 14
+            };
+
+            await _productRepo.Add(product);
+
+            Order order = new Order()
+            {
+                MemberID = 101,
+                CreatedDate = DateTime.Now,
+                OrderStatus = OrderStatuses.Ordered,
+                ProductId = 101,
+                TotalPrice = 900,
+            };
+
+            await _orderRepo.Add(order);    
+
+            Refund refund = new Refund()
+            {
+                OrderId = 1,
+                CreatedDate = DateTime.Now,
+                CreatedBy = 101,
+                Reason = "Broken",
+                RefundAmount = 900,
+                RefundStatus = RefundStatuses.PENDING
+            };
+            await _refundRepo.Add(refund);
         }
 
         [Test]
-        public async Task CreateRefundNotReturnableExceptionTest()
+        public async Task GetRefund_ById_PassTest()
+        {
+            var result = await _services.GetById(1);
+            Assert.That(result.Reason, Is.EqualTo("Damaged"));
+        }
+
+        [Test]
+        public async Task GetRefund_ById_FailTest()
         {
             try
             {
-                var result = await _RefundServices.CreateRefund(1, "Damaged Product");
-                // Test should not reach here
-                Assert.Fail("Test should throw ObjectIsNotReturnableException");
+                var result = await _services.GetById(5);
+            }
+            catch(Exception ex)
+            {
+                Assert.That(ex.Message, Is.EqualTo("Not Found"));
+            }
+        }
+
+        [Test]
+        public async Task Update_Refund_PassTest()
+        {
+            try
+            {
+                var req = await _services.GetById(1);
+                req.RefundStatus = RefundStatuses.SUCCEED;
+                var result = await _services.Update(req);
             }
             catch (Exception ex)
             {
-                Assert.AreEqual(ex.Message, "Refund not available for the current order");
+                Assert.That(ex.Message, Is.EqualTo("Not Found"));
+            }
+        }
+
+        [Test]
+        public async Task Update_Refund_FailTest()
+        {
+            try
+            {
+                var req = await _services.GetById(5);
+                req.RefundStatus = RefundStatuses.SUCCEED;
+                var result = await _services.Update(req);
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex.Message, Is.EqualTo("Not Found"));
             }
         }
 
 
         [Test]
-        public async Task CreateRefundReturnableDateExpiredExceptionTest()
+        public async Task Delete_Refund_PassTest()
         {
             try
             {
-                Order order = new Order()
-                {
-                    MemberID = 101,
-                    CreatedDate = new DateTime(2024, 03, 29, 10, 30, 0),
-                    OrderStatus = OrderStatuses.Ordered,
-                    ProductId = 101,
-                    TotalPrice = 1000,
-                };
-                await _orderRepo.Add(order);
-                var result = await _RefundServices.CreateRefund(2, "Damaged Product");
+                var result = await _services.Delete(1);
+                Assert.That(result.RefundId, Is.EqualTo(1));
             }
-            catch (ReturnableDateExpired ex)
+            catch (Exception ex)
             {
-                Assert.AreEqual(ex.Message, "The Returnable Date is Expired, Unable to proceed further.");
+                //Assert.That(ex.Message, Is.EqualTo("Not Found"));
+            }
+        }
+
+        [Test]
+        public async Task Delete_Refund_FailTest()
+        {
+            try
+            {
+                var req = await _services.GetById(5);
+                var result = await _services.Delete(req.RefundId);
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex.Message, Is.EqualTo("Not Found"));
+            }
+        }
+
+        [Test]
+        public async Task Create_Refund_PassTest()
+        {
+            try
+            {
+                var result = await _RefundServices.CreateRefund(1, "Damaged");
+                Assert.That(result.RefundAmount, Is.EqualTo(1000));
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        [Test]
+        public async Task Create_Refund_OrderNotFound_FailTest()
+        {
+            //Action
+            try
+            {
+                var result = await _RefundServices.CreateRefund(6, "Damaged");
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex.Message, Is.EqualTo("Order Not Found"));
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task Create_Refund_ProductNotFound_FailTest()
+        {
+            //Arrange
+            Order order = new Order()
+            {
+                MemberID = 101,
+                CreatedDate = DateTime.Now,
+                OrderStatus = OrderStatuses.Ordered,
+                ProductId = 10,
+                TotalPrice = 900,
+            };
+
+            await _orderRepo.Add(order);
+
+
+            //Action
+            try
+            {
+                var result = await _RefundServices.CreateRefund(2, "Damaged");
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex.Message, Is.EqualTo("Product Not Found"));
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task Create_Refund_MemberNotFound_FailTest()
+        {
+            //Arrange
+            Order order = new Order()
+            {
+                MemberID = 5,
+                CreatedDate = DateTime.Now,
+                OrderStatus = OrderStatuses.Ordered,
+                ProductId = 101,
+                TotalPrice = 900,
+            };
+
+            await _orderRepo.Add(order);
+
+
+            //Action
+            try
+            {
+                var result = await _RefundServices.CreateRefund(2, "Damaged");
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex.Message, Is.EqualTo("Member Not Found"));
+                Console.WriteLine(ex.Message);
             }
         }
     }

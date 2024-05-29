@@ -5,19 +5,30 @@ using RefundManagementApplication.Models.Enums;
 
 namespace RefundManagementApplication.Services
 {
-    public class PaymentServices : BaseServices<Payment>,IPaymentServices
+    public class PaymentServices : IPaymentServices
     {
         IRepository<int, Payment> _repo; // To create new Payment 
         IRepository<int, Refund> _refundRepo; // To get Refund TotalPrice
         IRepository<int, Order> _orderRepo; // To verify current Order Status is Accepted
         IOrderServices _orderServices; //For UpdateOrderStatusMethod
-        public PaymentServices(IRepository<int, Payment> repo, IRepository<int, Refund> refundRepo,IRepository<int,Order> orderRepo,IOrderServices orderServices) : base(repo)
+
+        public PaymentServices(IRepository<int, Payment> repo, IRepository<int, Refund> refundRepo,IRepository<int,Order> orderRepo,IOrderServices orderServices) 
         {
             _repo = repo;
             _refundRepo = refundRepo;
             _orderRepo = orderRepo;
             _orderServices = orderServices; 
         }
+
+
+        /// <summary>
+        /// Create Payment only for those already accepted by the Collector
+        /// </summary>
+        /// <param name="AdminId"></param>
+        /// <param name="refundId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException"></exception>
+        /// <exception cref="ForbiddenEntryException"></exception>
         public async Task<Payment> CreatePaymentToRefund(int AdminId,int refundId)
         {
             //Get Refund

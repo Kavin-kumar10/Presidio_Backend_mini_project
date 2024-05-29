@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.Enums;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace RefundManagementApplication.Context
 {
@@ -23,13 +25,32 @@ namespace RefundManagementApplication.Context
                 new Member() {  Id = 103, email = "raju@gmail.com",Name = "Raju",Role=MemberRole.Collector}
             );
 
+            modelBuilder.Entity<User>().HasData(
+                new User(){ MemberId = 101, Password = Encoding.UTF8.GetBytes("yourPassword"), PasswordHashKey = Encoding.UTF8.GetBytes("yourPassword"),Status = "Disable"},
+                new User() { MemberId = 102, Password = Encoding.UTF8.GetBytes("yourPassword"), PasswordHashKey = Encoding.UTF8.GetBytes("yourPassword"), Status = "Active" },
+                new User() { MemberId = 103, Password = Encoding.UTF8.GetBytes("yourPassword"), PasswordHashKey = Encoding.UTF8.GetBytes("yourPassword"), Status = "Disable" }
+            );
+
             modelBuilder.Entity<Product>().HasData(
                 new Product() { ProductId = 101, Title = "Soccor Football Nivia", Description = "Sportsman Products", Act_price = 1200, Curr_price = 1000, Count = 10, Returnable = 7, ReturnableForPrime = 14 },
                 new Product() { ProductId = 102, Title = "Noice TWS", Description = "ANC Tws airdopes", Act_price = 1000, Curr_price = 899, Count = 50, Returnable = 0, ReturnableForPrime = 7 }
             );
 
             modelBuilder.Entity<Order>().HasData(
-                new Order() { OrderId = 1,MemberID = 101,CreatedDate=DateTime.Now,OrderStatus=OrderStatuses.Ordered,ProductId = 101,TotalPrice = 1000}
+                new Order() { OrderId = 1, MemberID = 101, CreatedDate = DateTime.Now, OrderStatus = OrderStatuses.Refund_Accepted, ProductId = 101, TotalPrice = 1000 }
+            );
+
+            modelBuilder.Entity<Refund>().HasData(
+                new Refund()
+                {
+                    RefundId = 1,
+                    OrderId = 1,
+                    RefundAmount = 1000,
+                    Reason = "Damaged",
+                    RefundStatus = RefundStatuses.PENDING,
+                    CreatedBy = 101,
+                    CreatedDate = DateTime.Now,
+                }
             );
 
             //modelBuilder.Entity<Member>()
@@ -46,16 +67,16 @@ namespace RefundManagementApplication.Context
               .OnDelete(DeleteBehavior.Restrict) 
               .IsRequired();
             
-            modelBuilder.Entity<Refund>()
-                .HasOne(r => r.Order)
-                .WithOne(o => o.Refund)
-                .HasForeignKey<Refund>(r => r.OrderId)
-                .OnDelete(DeleteBehavior.Restrict); 
+            //modelBuilder.Entity<Refund>()
+            //    .HasOne(r => r.Order)
+            //    .WithOne(o => o.Refund)
+            //    .HasForeignKey<Refund>(r => r.OrderId)
+            //    .OnDelete(DeleteBehavior.Restrict); 
 
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Refund)
-                .WithOne(r => r.Order)
-                .HasForeignKey<Order>(o => o.RefundId);
+            //modelBuilder.Entity<Order>()
+            //    .HasOne(o => o.Refund)
+            //    .WithOne(r => r.Order)
+            //    .HasForeignKey<Order>(o => o.RefundId);
 
         }
     }

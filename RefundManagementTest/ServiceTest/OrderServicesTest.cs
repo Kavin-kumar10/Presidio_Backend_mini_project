@@ -27,14 +27,17 @@ namespace RefundManagementTest.ServiceTest
                                             .UseInMemoryDatabase("dummyDB");
             context = new RefundManagementContext(optionsBuilder.Options);
 
+            context.Database.EnsureDeletedAsync().Wait();
+            context.Database.EnsureCreatedAsync().Wait();
+
             _repo = new OrderRepository(context);
             _services = new OrderServices(_repo);
-
+            _OrderService = new OrderServices(new OrderRepository(context));
             Order order = new Order()
             {
                 MemberID = 101,
                 CreatedDate = DateTime.Now,
-                OrderStatus = OrderStatuses.Ordered,
+                OrderStatus = OrderStatuses.Refund_Initiated,
                 ProductId = 101,
                 TotalPrice = 1000,
             };
@@ -43,7 +46,7 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task CreateOrderPassTest()
+        public async Task Create_Order_PassTest()
         {
 
             Order order = new Order() {
@@ -55,11 +58,11 @@ namespace RefundManagementTest.ServiceTest
             };
             var result = await _services.Create(order);
 
-            Assert.AreEqual(result.OrderId, 2);
+            Assert.AreEqual(result.OrderId, 3);
         }
 
         [Test]
-        public async Task CreateOrderFailTest()
+        public async Task Create_Order_FailTest()
         {
             try
             {
@@ -67,7 +70,7 @@ namespace RefundManagementTest.ServiceTest
                 {
                     MemberID = 101,
                     CreatedDate = DateTime.Now,
-                    OrderStatus = OrderStatuses.Ordered,
+                    OrderStatus = OrderStatuses.Refund_Initiated,
                     ProductId = 101,
                     TotalPrice = 1000,
                 };
@@ -80,7 +83,7 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task GetAllOrderPassTest()
+        public async Task GetAll_Order_PassTest()
         {
             //Action
             var result = _services.GetAll();
@@ -90,7 +93,7 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task GetByIdPassTest()
+        public async Task Get_Order_ById_PassTest()
         {
             //Action
             var result = _services.GetById(1);
@@ -100,7 +103,7 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task GetByIdFailTest()
+        public async Task Get_Order_ById_FailTest()
         {
             try
             {
@@ -113,7 +116,7 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task UpdatePassTest()
+        public async Task Update_Order_PassTest()
         {
             try
             {
@@ -129,7 +132,7 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task UpdateFailTest()
+        public async Task Update_Order_FailTest()
         {
             try
             {
@@ -144,7 +147,7 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task DeletePassTest()
+        public async Task Delete_Order_PassTest()
         {
             try
             {
@@ -158,11 +161,12 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task DeleteFailTest()
+        public async Task Delete_Order_FailTest()
         {
             try
             {
-                var result = await _services.Delete(5);
+                var req = await _services.GetById(5);
+                var result = await _services.Delete(req.OrderId);
             }
             catch (Exception ex)
             {
@@ -171,22 +175,22 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task GetAllRefundDecisionPendingOrdersTest()
+        public async Task GetAll_Refund_DecisionPending_OrdersTest()
         {
-            var result = _OrderService.GetAllRefundDecisionPendingOrders();
-            Assert.IsNotNull(result);
+            var result = await _OrderService.GetAllRefundDecisionPendingOrders();
+            Assert.That(result.Count,Is.EqualTo(1));
         }
 
         [Test]
-        public async Task GetAllRefundDecisionAcceptedOrdersTest()
+        public async Task GetAll_Refund_DecisionAccepted_OrdersTest()
         {
-            var result = _OrderService.GetAllRefundDecisionAcceptedOrders();
-            Assert.IsNotNull(result);
+            var result = await _OrderService.GetAllRefundDecisionAcceptedOrders();
+            Assert.That(result.Count, Is.EqualTo(1));
         }
 
         [Test]
         [TestCase(OrderStatuses.Refund_Initiated,1)]
-        public async Task UpdateOrderStatusPassTest(OrderStatuses Status, int OrderId)
+        public async Task Update_OrderStatus_PassTest(OrderStatuses Status, int OrderId)
         {
             var result = await _OrderService.UpdateOrderStatus(Status, OrderId);
             Assert.AreEqual(result.OrderStatus,Status);
@@ -194,7 +198,7 @@ namespace RefundManagementTest.ServiceTest
 
         [Test]
         [TestCase(OrderStatuses.Refund_Initiated, 5)]
-        public async Task UpdateOrderStatusFailTest(OrderStatuses Status, int OrderId)
+        public async Task Update_OrderStatus_FailTest(OrderStatuses Status, int OrderId)
         {
             try
             {

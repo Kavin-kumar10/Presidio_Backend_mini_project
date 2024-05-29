@@ -98,6 +98,9 @@ namespace RefundManagementApplication.Migrations
                     b.Property<int?>("RefundId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RefundId1")
+                        .HasColumnType("int");
+
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
@@ -107,11 +110,20 @@ namespace RefundManagementApplication.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("RefundId")
-                        .IsUnique()
-                        .HasFilter("[RefundId] IS NOT NULL");
+                    b.HasIndex("RefundId1");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderId = 1,
+                            CreatedDate = new DateTime(2024, 5, 29, 10, 10, 46, 757, DateTimeKind.Local).AddTicks(6953),
+                            MemberID = 101,
+                            OrderStatus = 0,
+                            ProductId = 101,
+                            TotalPrice = 1000.0
+                        });
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.Payment", b =>
@@ -293,9 +305,8 @@ namespace RefundManagementApplication.Migrations
                         .IsRequired();
 
                     b.HasOne("RefundManagementApplication.Models.Refund", "Refund")
-                        .WithOne("Order")
-                        .HasForeignKey("RefundManagementApplication.Models.Order", "RefundId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany()
+                        .HasForeignKey("RefundId1");
 
                     b.Navigation("OrderedBy");
 
@@ -339,11 +350,6 @@ namespace RefundManagementApplication.Migrations
             modelBuilder.Entity("RefundManagementApplication.Models.Member", b =>
                 {
                     b.Navigation("orders");
-                });
-
-            modelBuilder.Entity("RefundManagementApplication.Models.Refund", b =>
-                {
-                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,8 @@ using RefundManagementApplication.Context;
 namespace RefundManagementApplication.Migrations
 {
     [DbContext(typeof(RefundManagementContext))]
-    [Migration("20240527053135_ModelsAndEnum")]
-    partial class ModelsAndEnum
+    [Migration("20240529044047_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,7 +56,7 @@ namespace RefundManagementApplication.Migrations
                             Id = 101,
                             Membership = 0,
                             Name = "Kavin",
-                            Role = 2,
+                            Role = 0,
                             email = "kavinkumar.prof@gmail.com"
                         },
                         new
@@ -64,7 +64,7 @@ namespace RefundManagementApplication.Migrations
                             Id = 102,
                             Membership = 0,
                             Name = "Pravin",
-                            Role = 0,
+                            Role = 2,
                             email = "pravinkumar.prof@gmail.com"
                         },
                         new
@@ -97,6 +97,12 @@ namespace RefundManagementApplication.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RefundId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RefundId1")
+                        .HasColumnType("int");
+
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
@@ -106,7 +112,20 @@ namespace RefundManagementApplication.Migrations
 
                     b.HasIndex("ProductId");
 
+                    b.HasIndex("RefundId1");
+
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderId = 1,
+                            CreatedDate = new DateTime(2024, 5, 29, 10, 10, 46, 757, DateTimeKind.Local).AddTicks(6953),
+                            MemberID = 101,
+                            OrderStatus = 0,
+                            ProductId = 101,
+                            TotalPrice = 1000.0
+                        });
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.Payment", b =>
@@ -246,8 +265,6 @@ namespace RefundManagementApplication.Migrations
 
                     b.HasIndex("CreatedByMemberId");
 
-                    b.HasIndex("OrderId");
-
                     b.HasIndex("PaymentId1");
 
                     b.ToTable("Refunds");
@@ -289,7 +306,13 @@ namespace RefundManagementApplication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RefundManagementApplication.Models.Refund", "Refund")
+                        .WithMany()
+                        .HasForeignKey("RefundId1");
+
                     b.Navigation("OrderedBy");
+
+                    b.Navigation("Refund");
 
                     b.Navigation("product");
                 });
@@ -304,12 +327,6 @@ namespace RefundManagementApplication.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedByMemberId");
 
-                    b.HasOne("RefundManagementApplication.Models.Order", "order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("RefundManagementApplication.Models.Payment", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId1");
@@ -319,8 +336,6 @@ namespace RefundManagementApplication.Migrations
                     b.Navigation("CreatedByMember");
 
                     b.Navigation("Payment");
-
-                    b.Navigation("order");
                 });
 
             modelBuilder.Entity("RefundManagementApplication.Models.User", b =>

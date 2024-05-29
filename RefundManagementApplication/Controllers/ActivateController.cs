@@ -15,8 +15,11 @@ namespace RefundManagementApplication.Controllers
     public class ActivateController : ControllerBase
     {
         private readonly IActivateServices _service;
-        public ActivateController(IActivateServices service) {
+        private readonly ILogger<ActivateController> _logger;
+
+        public ActivateController(IActivateServices service,ILogger<ActivateController> logger) {
             _service = service;
+            _logger = logger;
         }
 
         [HttpPut]
@@ -33,6 +36,7 @@ namespace RefundManagementApplication.Controllers
                 return Ok(res);
             }
             catch (NotFoundException unfe) {
+                _logger.LogError(unfe.Message);
                 return BadRequest(new ErrorModel(404,unfe.Message));
             }
         }
@@ -54,6 +58,7 @@ namespace RefundManagementApplication.Controllers
             }
             catch (NotFoundException unfe)
             {
+                _logger.LogError(unfe.Message);
                 return BadRequest(new ErrorModel(404, unfe.Message));
             }
         }

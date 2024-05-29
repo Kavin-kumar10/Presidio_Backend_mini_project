@@ -21,6 +21,9 @@ namespace RefundManagementTest.RepositoryTest
                                             .UseInMemoryDatabase("dummyDB");
             context = new RefundManagementContext(optionsBuilder.Options);
 
+            context.Database.EnsureDeletedAsync().Wait();
+            context.Database.EnsureCreatedAsync().Wait();
+
             _Productrepo = new ProductRepository(context);
             _Productservices = new ProductServices(_Productrepo);
 
@@ -34,10 +37,49 @@ namespace RefundManagementTest.RepositoryTest
                 Returnable = 7,
                 ReturnableForPrime = 14
             });
+            await context.SaveChangesAsync();
         }
 
         [Test]
-        public async Task CreateProduct()
+        public async Task CreateMultiple_Product_PassTest()
+        {
+            //Arrange
+
+            List<Product> products = new List<Product>();
+
+            products.Add(new Product()
+            {
+                Title = "Test",
+                Description = "Test",
+                Count = 1,
+                Act_price = 1000,
+                Curr_price = 700,
+                Returnable = 7,
+                ReturnableForPrime = 14
+            });
+
+            products.Add(new Product()
+            {
+                Title = "Test",
+                Description = "Test",
+                Count = 1,
+                Act_price = 1000,
+                Curr_price = 700,
+                Returnable = 7,
+                ReturnableForPrime = 14
+            });
+
+            //Action
+            var result = await _Productservices.CreateMultiple(products);
+
+            //Assert
+            Console.WriteLine(result.Count);
+            Assert.That(result.Count,Is.EqualTo(2));
+        }
+
+
+        [Test]
+        public async Task Create_Product_PassTest()
         {
             //Action
             var result = await _Productservices.Create(new Product()
@@ -56,25 +98,25 @@ namespace RefundManagementTest.RepositoryTest
         }
 
         [Test]
-        public async Task GetAllPassTest()
+        public async Task GetAll_Product_PassTest()
         {
             //Action
             var result = await _Productservices.GetAll();
-            //Assert
-            Assert.That(result, Is.Not.Null);
-        }
-
-        [Test]
-        public async Task GetByIdPassTest()
-        {
-            //Action
-            var result = await _Productservices.GetById(1);
             //Assert
             Assert.That(result,Is.Not.Null);
         }
 
         [Test]
-        public async Task GetByIdFailTest()
+        public async Task Get_Product_ById_PassTest()
+        {
+            //Action
+            var result = await _Productservices.GetById(101);
+            //Assert
+            Assert.That(result,Is.Not.Null);
+        }
+
+        [Test]
+        public async Task Get_Product_ById_FailTest()
         {
             try
             {
@@ -87,10 +129,10 @@ namespace RefundManagementTest.RepositoryTest
         }
 
         [Test]
-        public async Task UpdatePassTest()
+        public async Task Update_Product_PassTest()
         {
             //arrange
-            var req = await _Productrepo.Get(1);
+            var req = await _Productrepo.Get(101);
             req.Count = 20;
 
             //Action
@@ -101,7 +143,7 @@ namespace RefundManagementTest.RepositoryTest
         }
 
         [Test]
-        public async Task UpdateExceptionTest()
+        public async Task Update_Product_ExceptionTest()
         {
             //arrange
             try
@@ -117,19 +159,18 @@ namespace RefundManagementTest.RepositoryTest
         }
 
         [Test]
-        public async Task DeletePassTest()
+        public async Task Delete_Product_PassTest()
         {
-            var result = await _Productservices.Delete(1);
-            Assert.AreEqual(result.ProductId, 1);
+            var result = await _Productservices.Delete(101);
+            Assert.AreEqual(result.ProductId, 101);
         }
 
         [Test]
-        public async Task DeleteFailTest()
+        public async Task Delete_Product_FailTest()
         {
             try
             {
                 var req = await _Productservices.GetById(5);
-                req.Count = 20;
                 var result = await _Productservices.Delete(req.ProductId);
             }
             catch (Exception ex)
