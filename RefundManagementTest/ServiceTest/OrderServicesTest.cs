@@ -2,6 +2,7 @@
 using RefundManagementApplication.Context;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
+using RefundManagementApplication.Models.DTOs.RequestDTO.OrderReqDTOs;
 using RefundManagementApplication.Models.Enums;
 using RefundManagementApplication.Repositories;
 using RefundManagementApplication.Services;
@@ -17,6 +18,7 @@ namespace RefundManagementTest.ServiceTest
     {
         RefundManagementContext context;
         private IRepository<int,Order> _repo;
+        private IRepository<int, Product> _productRepo;
         private IServices<int,Order> _services;
         private IOrderServices _OrderService;
 
@@ -30,9 +32,10 @@ namespace RefundManagementTest.ServiceTest
             context.Database.EnsureDeletedAsync().Wait();
             context.Database.EnsureCreatedAsync().Wait();
 
+            _productRepo = new ProductRepository(context);
             _repo = new OrderRepository(context);
-            _services = new OrderServices(_repo);
-            _OrderService = new OrderServices(new OrderRepository(context));
+            _services = new OrderServices(_repo,_productRepo);
+            _OrderService = new OrderServices(new OrderRepository(context),_productRepo);
             Order order = new Order()
             {
                 MemberID = 101,
@@ -44,6 +47,44 @@ namespace RefundManagementTest.ServiceTest
 
             await _repo.Add(order);
         }
+
+        [Test]
+        public async Task CreateOrder_From_Register_PassTest()
+        {
+            //Arrange
+            OrderRequestDTO orderRequestDTO = new OrderRequestDTO() { 
+                MemberID = 101,
+                ProductId = 101
+            };
+
+            //Action
+            var result = await _OrderService.CreateOrder(orderRequestDTO);
+
+            //Assert
+            Assert.That(result.MemberID, Is.EqualTo(101));
+            Console.WriteLine(result.TotalPrice);
+        }
+
+        [Test]
+        public async Task CreateOrder_From_Register_FailTest()
+        {
+            try
+            {
+                //Arrange
+                OrderRequestDTO orderRequestDTO = new OrderRequestDTO()
+                {
+                    MemberID = 101,
+                    ProductId = 200
+                };
+                //Action
+                var result = await _OrderService.CreateOrder(orderRequestDTO);
+            }
+            catch (Exception ex) {            
+                //Assert
+                Assert.That(ex.Message, Is.EqualTo("Product Not Found"));
+            }
+        }
+
 
         [Test]
         public async Task Create_Order_PassTest()

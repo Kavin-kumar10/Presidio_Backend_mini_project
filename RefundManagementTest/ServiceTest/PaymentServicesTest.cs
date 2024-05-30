@@ -16,6 +16,7 @@ namespace RefundManagementTest.ServiceTest
     public class PaymentServicesTest
     {
         RefundManagementContext context;
+        private ProductRepository _productRepo;
         private IRepository<int,Payment> _paymentRepo;
         private IRepository<int,Refund> _refundRepo;
         private IRepository<int,Order> _orderRepo;
@@ -32,10 +33,11 @@ namespace RefundManagementTest.ServiceTest
             context.Database.EnsureDeletedAsync().Wait();
             context.Database.EnsureCreatedAsync().Wait();
 
+            _productRepo = new ProductRepository(context);
             _paymentRepo = new PaymentRepository(context);
             _refundRepo = new RefundRepository(context);
             _orderRepo = new OrderRepository(context);
-            _OrderServices = new OrderServices(new OrderRepository(context));
+            _OrderServices = new OrderServices(new OrderRepository(context), _productRepo);
             _services = new PaymentServices(_paymentRepo ,_refundRepo, _orderRepo, _OrderServices);
 
             //Member member = new Member() { Id = 101, email = "kavinkumar.prof@gmail.com", Name = "Kavin", Role = MemberRole.User };

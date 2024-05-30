@@ -1,16 +1,41 @@
 ﻿using RefundManagementApplication.Exceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
+using RefundManagementApplication.Models.DTOs.RequestDTO.OrderReqDTOs;
 using RefundManagementApplication.Models.Enums;
+using System.Runtime.CompilerServices;
 
 namespace RefundManagementApplication.Services
 {
     public class OrderServices : BaseServices<Order>, IOrderServices
     {
-        IRepository<int, Order> _repo;    
-        public OrderServices(IRepository<int, Order> repo) : base(repo)
+        IRepository<int, Order> _repo;  
+        IRepository<int,Product> _productRepository;
+        public OrderServices(IRepository<int, Order> repo, IRepository<int, Product> productRepository) : base(repo)
         {
             _repo = repo;
+            _productRepository = productRepository;
+        }
+
+        /// <summary>
+        /// Create Order with orderRequestDTOs
+        /// </summary>
+        /// <param name="orderRequestDTO"></param>
+        /// <returns></returns>
+        public async Task<Order> CreateOrder(OrderRequestDTO orderRequestDTO)
+        {
+            var product = await _productRepository.Get(orderRequestDTO.ProductId);
+            if (product == null) throw new NotFoundException("Product");
+            product.Count--;
+            Order order = new Order()
+            {
+                MemberID = orderRequestDTO.MemberID,
+                ProductId = orderRequestDTO.ProductId,
+                TotalPrice = product.Curr_price,
+            };
+            var result = await Create(order);
+            await _productRepository.Update(product);
+            return result;
         }
 
         /// <summary>

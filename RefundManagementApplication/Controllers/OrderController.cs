@@ -15,15 +15,13 @@ namespace RefundManagementApplication.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IServices<int, Order> _service;
-        private readonly IServices<int,Product> _productService;
         private readonly ILogger<OrderController> _logger;
         private readonly IOrderServices _orderService;
 
-        public OrderController(IServices<int, Order> service,IServices<int,Product> productService,IOrderServices orderServices,ILogger<OrderController> logger)
+        public OrderController(IServices<int, Order> service,IOrderServices orderServices,ILogger<OrderController> logger)
         {
             _service = service;
             _orderService = orderServices;  
-            _productService = productService;
             _logger = logger;
         }
 
@@ -153,15 +151,7 @@ namespace RefundManagementApplication.Controllers
         {
             try
             {
-                var product = await _productService.GetById(orderRequestDTO.ProductId);
-                product.Count--;
-                Order order = new Order() {
-                    MemberID = orderRequestDTO.MemberID,
-                    ProductId = orderRequestDTO.ProductId,
-                    TotalPrice = product.Curr_price,
-                };
-                var result = await _service.Create(order);
-                await _productService.Update(product);
+                var result = await _orderService.CreateOrder(orderRequestDTO);
                 return Ok(result);
             }
             catch (UnableToCreateException utce)

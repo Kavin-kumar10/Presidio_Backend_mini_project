@@ -26,9 +26,9 @@ namespace RefundManagementApplication.Context
             );
 
             modelBuilder.Entity<User>().HasData(
-                new User(){ MemberId = 101, Password = Encoding.UTF8.GetBytes("yourPassword"), PasswordHashKey = Encoding.UTF8.GetBytes("yourPassword"),Status = "Disable"},
+                new User(){ MemberId = 101, Password = Encoding.UTF8.GetBytes("yourPassword"), PasswordHashKey = Encoding.UTF8.GetBytes("yourPassword"),Status = "Disabled"},
                 new User() { MemberId = 102, Password = Encoding.UTF8.GetBytes("yourPassword"), PasswordHashKey = Encoding.UTF8.GetBytes("yourPassword"), Status = "Active" },
-                new User() { MemberId = 103, Password = Encoding.UTF8.GetBytes("yourPassword"), PasswordHashKey = Encoding.UTF8.GetBytes("yourPassword"), Status = "Disable" }
+                new User() { MemberId = 103, Password = Encoding.UTF8.GetBytes("yourPassword"), PasswordHashKey = Encoding.UTF8.GetBytes("yourPassword"), Status = "Disabled" }
             );
 
             modelBuilder.Entity<Product>().HasData(
