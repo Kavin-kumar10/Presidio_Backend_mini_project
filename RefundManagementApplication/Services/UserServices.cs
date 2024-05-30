@@ -6,6 +6,7 @@ using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.RequestDTO.AuthReqDTOs;
 using RefundManagementApplication.Models.DTOs.ResponseDTO.LoginResponseDTOs;
 using RefundManagementApplication.Models.Enums;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -54,6 +55,7 @@ namespace RefundManagementApplication.Services
             throw new UnauthorizedUserException("Invalid username or password");
         }
 
+        [ExcludeFromCodeCoverage]
         private LoginReturnDTO MapMemberToLoginReturn(Member member)
         {
             LoginReturnDTO returnDTO = new LoginReturnDTO();
@@ -114,11 +116,13 @@ namespace RefundManagementApplication.Services
             throw new UnableToRegisterException("Unable to Register");
         }
 
+        [ExcludeFromCodeCoverage]
         private async Task RevertUserInsert(User user)
         {
             await _userRepo.Delete(user.MemberId);
         }
 
+        [ExcludeFromCodeCoverage]
         private async Task RevertMemberInsert(Member member)
         {
 

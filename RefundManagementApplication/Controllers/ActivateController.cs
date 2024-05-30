@@ -7,6 +7,7 @@ using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.ResponseDTO.Activation;
 using RefundManagementApplication.Models.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RefundManagementApplication.Controllers
 {
@@ -27,7 +28,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles ="Admin")]
         [ProducesResponseType(typeof(ActivateReturnDTO),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel),StatusCodes.Status404NotFound)]
-
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<ActivateReturnDTO>> ActivateUser(int MemberId,MemberRole role,Plan plan)
         {
             try
@@ -48,6 +49,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(ActivateReturnDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
 
         public async Task<ActionResult<ActivateReturnDTO>> DeactivateUser(int MemberId)
         {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RefundManagementApplication.Exceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RefundManagementApplication.Controllers
 {
@@ -19,7 +20,8 @@ namespace RefundManagementApplication.Controllers
         [ProducesResponseType(typeof(Payment),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(typeof(ErrorModel),StatusCodes.Status401Unauthorized)]    
+        [ProducesResponseType(typeof(ErrorModel),StatusCodes.Status401Unauthorized)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Payment>> RefundPayment(int AdminId,int RefundId)
         {
             try

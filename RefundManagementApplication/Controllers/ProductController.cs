@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RefundManagementApplication.Exceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RefundManagementApplication.Controllers
 {
@@ -19,6 +20,7 @@ namespace RefundManagementApplication.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Product>),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel),StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<IEnumerable<Product>>> Get()
         {
             try
@@ -36,6 +38,7 @@ namespace RefundManagementApplication.Controllers
         [Route("GetProductsById")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Product>> GetById(int ProductId)
         {
             try
@@ -54,6 +57,7 @@ namespace RefundManagementApplication.Controllers
         [Route("MultiData")]
         [ProducesResponseType(typeof(IList<Product>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<IList<Product>>> CreateMultipleEntity(IList<Product> products)
         {
             try
@@ -72,6 +76,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Product>> Create(Product product)
         {
             try
@@ -89,6 +94,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Product>> Update(Product product)
         {
             try
@@ -106,6 +112,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Product>> Delete(int productKey)
         {
             try

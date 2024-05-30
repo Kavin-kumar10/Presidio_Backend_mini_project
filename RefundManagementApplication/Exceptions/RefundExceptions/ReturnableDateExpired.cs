@@ -16,5 +16,7 @@ namespace RefundManagementApplication.Exceptions.RefundExceptions
             this.message = message;
         }
 
+        public override string Message => message;
+
     }
 }

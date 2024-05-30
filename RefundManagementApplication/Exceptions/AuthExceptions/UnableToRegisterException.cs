@@ -3,7 +3,7 @@
 namespace RefundManagementApplication.Exceptions.AuthExceptions
 {
     [Serializable]
-    internal class UnableToRegisterException : Exception
+    public class UnableToRegisterException : Exception
     {
         string message;
         public UnableToRegisterException()

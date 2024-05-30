@@ -15,6 +15,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RefundManagementApplication.Models.DTOs.RequestDTO.AuthReqDTOs;
+using RefundManagementApplication.Exceptions.AuthExceptions;
+using RefundManagementApplication.Exceptions.ActivationExceptions;
 
 namespace RefundManagementTest.ServiceTest
 {
@@ -125,7 +127,7 @@ namespace RefundManagementTest.ServiceTest
         }
 
         [Test]
-        public async Task Login_PassTest()
+        public async Task Login_AccountNotActivatedException_PassTest()
         {
             //Arrange
             try
@@ -138,10 +140,10 @@ namespace RefundManagementTest.ServiceTest
                 //Action
                 var result = await _services.Login(userLoginDTO);
             }
-            catch (Exception ex)
+            catch (UserNotActiveException unae)
             {
-                Assert.That(ex.Message, Is.EqualTo("Your account is not activated"));
-                Console.WriteLine(ex.Message);
+                Assert.That(unae.Message, Is.EqualTo("Your account is not activated"));
+                Console.WriteLine(unae.Message);
             }
         }
 
@@ -159,13 +161,12 @@ namespace RefundManagementTest.ServiceTest
                 //Action
                 var result = await _services.Login(userLoginDTO);
             }
-            catch (Exception ex)
+            catch (UnauthorizedUserException uaue)
             {
-                Assert.That(ex.Message, Is.EqualTo("Invalid username or password"));
-                Console.WriteLine(ex.Message);
+                Assert.That(uaue.Message, Is.EqualTo("Invalid username or password"));
+                Console.WriteLine(uaue.Message);
             }
         }
-
 
     }
 }

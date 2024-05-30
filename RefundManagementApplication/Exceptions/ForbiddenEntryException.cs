@@ -3,7 +3,7 @@
 namespace RefundManagementApplication.Exceptions
 {
     [Serializable]
-    internal class ForbiddenEntryException : Exception
+    public class ForbiddenEntryException : Exception
     {
         string message;
         public ForbiddenEntryException()

@@ -250,5 +250,63 @@ namespace RefundManagementTest.ServiceTest
                 Console.WriteLine(ex.Message);
             }
         }
+
+
+        [Test]
+        public async Task Create_Refund_ObjectNotReturnable_FailTest()
+        {
+            //Arrange
+            Order order = new Order()
+            {
+                MemberID = 101,
+                CreatedDate = DateTime.Now,
+                OrderStatus = OrderStatuses.Ordered,
+                ProductId = 102,
+                TotalPrice = 900,
+            };
+
+            await _orderRepo.Add(order);
+
+
+            //Action
+            try
+            {
+                var result = await _RefundServices.CreateRefund(3, "Damaged");
+            }
+            catch (ObjectIsNotReturnableException onre)
+            {
+                Assert.That(onre.Message, Is.EqualTo("Refund not available for the current order"));
+                Console.WriteLine(onre.Message);
+            }
+        }
+
+        [Test]
+        public async Task Create_Refund_ReturnableDateExpired_FailTest()
+        {
+            //Arrange
+            Order order = new Order()
+            {
+                MemberID = 101,
+                CreatedDate = new DateTime(2024, 02, 28, 10, 30, 0),
+                OrderStatus = OrderStatuses.Ordered,
+                ProductId = 101,
+                TotalPrice = 900,
+            };
+
+            await _orderRepo.Add(order);
+
+
+            //Action
+            try
+            {
+                var result = await _RefundServices.CreateRefund(3, "Damaged");
+            }
+            catch (ReturnableDateExpired rde)
+            {
+                Assert.That(rde.Message, Is.EqualTo("The Returnable Date is Expired, Unable to proceed further."));
+                Console.WriteLine(rde.Message);
+            }
+        }
+
     }
 }

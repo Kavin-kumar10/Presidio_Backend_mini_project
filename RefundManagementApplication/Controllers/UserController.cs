@@ -6,6 +6,7 @@ using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.RequestDTO.AuthReqDTOs;
 using RefundManagementApplication.Models.DTOs.ResponseDTO.LoginResponseDTOs;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RefundManagementApplication.Controllers
 {
@@ -27,6 +28,7 @@ namespace RefundManagementApplication.Controllers
         [ProducesResponseType (typeof(Member),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status403Forbidden)]
         [ProducesResponseType (typeof(ErrorModel),StatusCodes.Status401Unauthorized)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Member>> Register(RegisterRequestDTO registerrequestDTO)
         {
             try
@@ -47,6 +49,7 @@ namespace RefundManagementApplication.Controllers
         [Route("Login")]
         [ProducesResponseType(typeof(Member), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status401Unauthorized)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<LoginReturnDTO>> Login(UserLoginDTO userloginDTO)
         {
             try

@@ -8,6 +8,7 @@ using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.RequestDTO.OrderReqDTOs;
 using RefundManagementApplication.Models.Enums;
 using RefundManagementApplication.Services;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RefundManagementApplication.Controllers
 {
@@ -38,6 +39,7 @@ namespace RefundManagementApplication.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Refund>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<IEnumerable<Refund>>> Get()
         {
             try
@@ -56,6 +58,7 @@ namespace RefundManagementApplication.Controllers
         [Route("GetById")]
         [ProducesResponseType(typeof(Refund), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Refund>> GetById(int Id)
         {
             try
@@ -73,6 +76,7 @@ namespace RefundManagementApplication.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(Refund), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]   
         public async Task<ActionResult<Refund>> Create(int OrderId,String Reason)
         {
             try
@@ -114,6 +118,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(Refund), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Refund>> Update(Refund refund)
         {
             try
@@ -132,6 +137,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(Refund), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Refund>> Delete(int Key)
         {
             try

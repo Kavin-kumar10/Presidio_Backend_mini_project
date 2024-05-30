@@ -8,7 +8,7 @@ namespace RefundManagementApplication.Models.DTOs.RequestDTO.AuthReqDTOs
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Password Cannot be empty")]
-        [Range(50, 100, ErrorMessage = "Password is Too Short")]
+        [MinLength(6, ErrorMessage = "Password has to be minmum 6 chars long")]
         public string password { get; set; }
 
         [Required(ErrorMessage = "EmailAddress Cannot be empty")]

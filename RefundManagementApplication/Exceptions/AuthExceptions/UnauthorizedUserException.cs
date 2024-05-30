@@ -3,7 +3,7 @@
 namespace RefundManagementApplication.Exceptions.AuthExceptions
 {
     [Serializable]
-    internal class UnauthorizedUserException : Exception
+    public class UnauthorizedUserException : Exception
     {
         string message;
         public UnauthorizedUserException()

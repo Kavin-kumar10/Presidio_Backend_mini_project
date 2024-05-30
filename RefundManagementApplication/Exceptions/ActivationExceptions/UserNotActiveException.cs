@@ -3,7 +3,7 @@
 namespace RefundManagementApplication.Exceptions.ActivationExceptions
 {
     [Serializable]
-    internal class UserNotActiveException : Exception
+    public class UserNotActiveException : Exception
     {
         string message;
         public UserNotActiveException()

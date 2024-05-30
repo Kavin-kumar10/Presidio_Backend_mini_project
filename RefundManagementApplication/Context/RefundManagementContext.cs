@@ -41,16 +41,7 @@ namespace RefundManagementApplication.Context
             );
 
             modelBuilder.Entity<Refund>().HasData(
-                new Refund()
-                {
-                    RefundId = 1,
-                    OrderId = 1,
-                    RefundAmount = 1000,
-                    Reason = "Damaged",
-                    RefundStatus = RefundStatuses.PENDING,
-                    CreatedBy = 101,
-                    CreatedDate = DateTime.Now,
-                }
+                new Refund(){ RefundId = 1,OrderId = 1, RefundAmount = 1000, Reason = "Damaged", RefundStatus = RefundStatuses.PENDING, CreatedBy = 101,CreatedDate = DateTime.Now}
             );
 
             //modelBuilder.Entity<Member>()

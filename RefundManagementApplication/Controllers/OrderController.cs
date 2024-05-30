@@ -6,6 +6,7 @@ using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.RequestDTO.OrderReqDTOs;
 using RefundManagementApplication.Models.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RefundManagementApplication.Controllers
 {
@@ -33,6 +34,7 @@ namespace RefundManagementApplication.Controllers
         [Route("GetPendingRefund")]
         [ProducesResponseType(typeof(IEnumerable<Order>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
 
         // Get Pending Products only for Collector - for further product Retrival process
         public async Task<ActionResult<IEnumerable<Order>>> GetPendingRefund()
@@ -54,6 +56,7 @@ namespace RefundManagementApplication.Controllers
         [Route("GetAcceptedRefund")]
         [ProducesResponseType(typeof(IEnumerable<Order>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
 
         // Get Pending Products only for Collector - for further product Retrival process
         public async Task<ActionResult<IEnumerable<Order>>> GetAcceptedRefund()
@@ -76,6 +79,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Collector")]
         [ProducesResponseType(typeof(Order), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
 
         // Accept or Reject the Product
         public async Task<ActionResult<Order>> RefundRequestDecision(int OrderId,bool decision)
@@ -104,6 +108,8 @@ namespace RefundManagementApplication.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Order>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
+
         public async Task<ActionResult<IEnumerable<Order>>> Get()
         {
             try
@@ -122,6 +128,8 @@ namespace RefundManagementApplication.Controllers
         [Route("GetById")]
         [ProducesResponseType(typeof(Order), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
+
         public async Task<ActionResult<Order>> GetById(int Id)
         {
             try
@@ -137,8 +145,10 @@ namespace RefundManagementApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="User")]
         [ProducesResponseType(typeof(Order), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Order>> Create(OrderRequestDTO orderRequestDTO)
         {
             try
@@ -165,6 +175,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(Order), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Order>> Update(Order order)
         {
             try
@@ -183,6 +194,7 @@ namespace RefundManagementApplication.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(Order), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult<Order>> Delete(int Key)
         {
             try

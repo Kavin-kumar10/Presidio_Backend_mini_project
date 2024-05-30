@@ -3,7 +3,7 @@
 namespace RefundManagementApplication.Exceptions.AuthExceptions
 {
     [Serializable]
-    internal class UserNotFoundException : Exception
+    public class UserNotFoundException : Exception
     {
         string message;
         public UserNotFoundException()
