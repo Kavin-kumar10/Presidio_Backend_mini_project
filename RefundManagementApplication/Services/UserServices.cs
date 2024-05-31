@@ -18,12 +18,15 @@ namespace RefundManagementApplication.Services
         private readonly IRepository<int,User> _userRepo;
         private readonly ITokenServices _tokenServices;
 
+        #region Constructor
         public UserServices(IRepository<int,Member> memrepo,IRepository<int,User> userRepo,ITokenServices tokenservices) {
             _memrepo = memrepo;
             _userRepo = userRepo;
             _tokenServices = tokenservices;
         }
+        #endregion
 
+        #region Login with loginDTO
         /// <summary>
         /// Login using loginDTO -> INPUT , HashProtected compared with the Key in database 
         /// </summary>
@@ -54,7 +57,9 @@ namespace RefundManagementApplication.Services
             }
             throw new UnauthorizedUserException("Invalid username or password");
         }
+        #endregion
 
+        #region Map (Member -> LoginReturnDTO)
         [ExcludeFromCodeCoverage]
         private LoginReturnDTO MapMemberToLoginReturn(Member member)
         {
@@ -64,7 +69,9 @@ namespace RefundManagementApplication.Services
             returnDTO.Token = _tokenServices.GenerateToken(member);
             return returnDTO;
         }
+        #endregion
 
+        #region Compare Password
         private bool ComparePassword(byte[] encrypterPass, byte[] password)
         {
             for (int i = 0; i < encrypterPass.Length; i++)
@@ -76,8 +83,9 @@ namespace RefundManagementApplication.Services
             }
             return true;
         }
+        #endregion
 
-
+        #region Register with registerRequestDTO
         /// <summary>
         /// Register using RegisterRequestDTO -> INPUT, Add new User model and Member model to the database with password hashed
         /// </summary>
@@ -115,7 +123,9 @@ namespace RefundManagementApplication.Services
             //    await RevertUserInsert(user);
             throw new UnableToRegisterException("Unable to Register");
         }
+        #endregion
 
+        #region Revert Inserts
         [ExcludeFromCodeCoverage]
         private async Task RevertUserInsert(User user)
         {
@@ -128,7 +138,9 @@ namespace RefundManagementApplication.Services
 
             await _memrepo.Delete(member.Id);
         }
+        #endregion
 
+        #region Map (RegisterRequestDTO -> User)
         public async Task<User> MapRegisterRequestDTOtoUser(RegisterRequestDTO registerRequestDTO)
         {
             User user = new User();
@@ -138,5 +150,7 @@ namespace RefundManagementApplication.Services
             user.Password = hMACSHA.ComputeHash(Encoding.UTF8.GetBytes(registerRequestDTO.password));
             return user;
         }
+        #endregion
+
     }
 }

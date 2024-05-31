@@ -16,6 +16,23 @@ namespace RefundManagementApplication.Controllers
             _paymentServices = paymentServices;
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(Payment), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
+        public async Task<ActionResult<Payment>> GetMyPaymnt(int PaymentId)
+        {
+            try
+            {
+                var result = await _paymentServices.GetMyPayment(PaymentId);
+                return Ok(result);
+            }
+            catch(NotFoundException nfe) {
+                return BadRequest(new ErrorModel(404, nfe.Message));
+            }
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(Payment),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]

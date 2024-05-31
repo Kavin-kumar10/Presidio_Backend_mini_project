@@ -11,12 +11,16 @@ namespace RefundManagementApplication.Services
     {
         IRepository<int, Order> _repo;  
         IRepository<int,Product> _productRepository;
+
+        #region Constructor
         public OrderServices(IRepository<int, Order> repo, IRepository<int, Product> productRepository) : base(repo)
         {
             _repo = repo;
             _productRepository = productRepository;
         }
+        #endregion
 
+        #region Create New Order from OrderRequestDTO
         /// <summary>
         /// Create Order with orderRequestDTOs
         /// </summary>
@@ -37,7 +41,9 @@ namespace RefundManagementApplication.Services
             await _productRepository.Update(product);
             return result;
         }
+        #endregion
 
+        #region [Collector only] Get All Refund Decision Pending Orders
         /// <summary>
         /// Get all the Decision pending ( Order not returned yet ) -> Only Collector can see
         /// </summary>
@@ -48,7 +54,9 @@ namespace RefundManagementApplication.Services
             orders = orders.Where(o=>o.OrderStatus == OrderStatuses.Refund_Initiated).ToList();
             return orders;
         }
+        #endregion
 
+        #region [Admin only] Get All Refund Decision Accepted Orders to proceed further
         /// <summary>
         /// Get all the Decision Accepted ( Order returned and Accepted by Collector ) -> Only Admin can see
         /// </summary>
@@ -59,7 +67,9 @@ namespace RefundManagementApplication.Services
             orders = orders.Where(o => o.OrderStatus == OrderStatuses.Refund_Accepted).ToList();
             return orders;
         }
+        #endregion
 
+        #region Update Order Status Based on Refund Process
         /// <summary>
         /// Update Order Status to Accepted || Rejected || Initiated for Refund
         /// </summary>
@@ -76,5 +86,7 @@ namespace RefundManagementApplication.Services
             }
             throw new NotFoundException("Order");
         }
+        #endregion
+
     }
 }

@@ -12,6 +12,7 @@ namespace RefundManagementApplication.Services
         IRepository<int, Order> _orderRepo; // To verify current Order Status is Accepted
         IOrderServices _orderServices; //For UpdateOrderStatusMethod
 
+        #region Constructor
         public PaymentServices(IRepository<int, Payment> repo, IRepository<int, Refund> refundRepo,IRepository<int,Order> orderRepo,IOrderServices orderServices) 
         {
             _repo = repo;
@@ -19,8 +20,27 @@ namespace RefundManagementApplication.Services
             _orderRepo = orderRepo;
             _orderServices = orderServices; 
         }
+        #endregion
 
+        #region Get Payment Details by Id
+        /// <summary>
+        /// Get my Payment Details for User
+        /// </summary>
+        /// <param name="PaymentId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException"></exception>
+        public async Task<Payment> GetMyPayment(int PaymentId)
+        {
+            var result = await _repo.Get(PaymentId);
+            if(result == null)
+            {
+                throw new NotFoundException("Payment");
+            }
+            return result;
+        }
+        #endregion
 
+        #region Create Payment To Refund
         /// <summary>
         /// Create Payment only for those already accepted by the Collector
         /// </summary>
@@ -61,8 +81,11 @@ namespace RefundManagementApplication.Services
             //UpdateStatus
             await _orderServices.UpdateOrderStatus(OrderStatuses.Refund_Completed, order.OrderId);
             refund.ClosedBy = AdminId;
+            refund.PaymentId = result.PaymentId;
             await _refundRepo.Update(refund); 
             return result;
         }
+        #endregion
+
     }
 }

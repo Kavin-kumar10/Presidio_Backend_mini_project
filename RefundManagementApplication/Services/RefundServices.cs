@@ -13,6 +13,8 @@ namespace RefundManagementApplication.Services
         IRepository<int, Refund> _Repo;
         IRepository<int, Member> _memberRepo;
         IRepository<int, Product> _productRepo;
+
+        #region Constructor
         public RefundServices(IRepository<int, Refund> repo, IRepository<int, Order> orderRepo, IRepository<int, Member> memberRepo, IRepository<int, Product> productRepo) : base(repo)
         {
             _orderRepo = orderRepo;
@@ -20,7 +22,9 @@ namespace RefundManagementApplication.Services
             _memberRepo = memberRepo;
             _productRepo = productRepo;
         }
+        #endregion
 
+        #region Create Refund If only applicable
         /// <summary>
         /// Create Refund Only who are all applicable
         /// Returnable time period -> Free subscription
@@ -66,8 +70,9 @@ namespace RefundManagementApplication.Services
             }
             throw new UnableToCreateException();
         }
+        #endregion
 
-        
+        #region Validate Return Duration (private class)
         private async Task<bool> CheckValidReturnDuration(DateTime created,int DaysValid)
         {
             if (DaysValid == 0)
@@ -78,5 +83,7 @@ namespace RefundManagementApplication.Services
                 return true;
             throw new ReturnableDateExpired();
         }
+        #endregion
+
     }
 }

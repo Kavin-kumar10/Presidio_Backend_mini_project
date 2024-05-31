@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RefundManagementApplication.Exceptions;
 
 namespace RefundManagementTest.ServiceTest
 {
@@ -40,13 +41,6 @@ namespace RefundManagementTest.ServiceTest
             _OrderServices = new OrderServices(new OrderRepository(context), _productRepo);
             _services = new PaymentServices(_paymentRepo ,_refundRepo, _orderRepo, _OrderServices);
 
-            //Member member = new Member() { Id = 101, email = "kavinkumar.prof@gmail.com", Name = "Kavin", Role = MemberRole.User };
-            //context.Members.Add(member);
-
-            //Order order = new Order() { OrderId = 1, MemberID = 101, CreatedDate = DateTime.Now, OrderStatus = OrderStatuses.Refund_Accepted, ProductId = 101, TotalPrice = 1000 };
-            //context.Orders.Add(order);
-
-
             Refund refund = new Refund() { 
                 OrderId = 1,
                 RefundId = 2,
@@ -57,6 +51,18 @@ namespace RefundManagementTest.ServiceTest
                 CreatedDate = DateTime.Now,
             };
             context.Refunds.Add(refund);
+
+            Payment payment = new Payment()
+            {
+                RefundId = 1,
+                PaymentDate = DateTime.Now,
+                TotalPayment = 1000,
+                Type = "NEFT",
+                TransactionId = new Guid(),
+                UserId = 101
+            };
+
+            await _paymentRepo.Add(payment);
             await context.SaveChangesAsync();
         }
 
@@ -78,6 +84,30 @@ namespace RefundManagementTest.ServiceTest
             {
                 Assert.That(ex.Message, Is.EqualTo("Refund Not Found"));
                 Console.WriteLine(ex.Message);  
+            }
+        }
+
+        [Test]
+        public async Task Get_Payment_ById_PassTest()
+        {
+            //Action
+            var result = await _services.GetMyPayment(1);
+
+            //Assert
+            Assert.That(result.TotalPayment, Is.EqualTo(1000));
+        }
+
+        [Test]
+        public async Task Get_Payment_ById_FailTest()
+        {
+            try
+            {
+                //Action
+                var result = await _services.GetMyPayment(101);
+            }
+            catch(NotFoundException nfe)
+            {
+                Assert.That(nfe.Message, Is.EqualTo("Payment Not Found"));
             }
         }
     }

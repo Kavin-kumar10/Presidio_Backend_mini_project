@@ -13,11 +13,14 @@ namespace RefundManagementApplication.Services
         private IRepository<int, User> _userRepo;
         private IRepository<int, Member> _memRepo;
 
+        #region Constructor
         public ActivateServices(IRepository<int,User> userrepo,IRepository<int,Member> memRepo) { 
             _userRepo = userrepo;
             _memRepo = memRepo;
         }
+        #endregion
 
+        #region Activate Member (Only by Admin)
         /// <summary>
         /// Activate The User based on Role and Plan -> Access -> Admin
         /// </summary>
@@ -26,7 +29,7 @@ namespace RefundManagementApplication.Services
         /// <param name="plan"></param>
         /// <returns></returns>
         /// <exception cref="UserNotFoundException"></exception>
-        
+
         public async Task<ActivateReturnDTO> Activate(int MemberId,MemberRole Role, Plan plan)
         {
             ActivateReturnDTO returnDTO = new ActivateReturnDTO();
@@ -50,7 +53,9 @@ namespace RefundManagementApplication.Services
             }
             throw new UserNotFoundException();
         }
+        #endregion
 
+        #region Deactivate Member (Only by Admin)
         /// <summary>
         /// Deactivate User with memberid parameter Access -> only Admin
         /// </summary>
@@ -73,5 +78,6 @@ namespace RefundManagementApplication.Services
             }
             throw new UserNotFoundException();
         }
+        #endregion
     }
 }

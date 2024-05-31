@@ -12,12 +12,15 @@ namespace RefundManagementApplication.Services
         private readonly string _secretKey;
         private readonly SymmetricSecurityKey _key;
 
+        #region Constructor
         public TokenServices(IConfiguration configuration)
         {
             _secretKey = configuration.GetSection("TokenKey").GetSection("JWT").Value.ToString();
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
         }
+        #endregion
 
+        #region Generate Token
         /// <summary>
         /// Generate Token from the Member data received from the User
         /// </summary>
@@ -35,5 +38,6 @@ namespace RefundManagementApplication.Services
             token = new JwtSecurityTokenHandler().WriteToken(myToken);
             return token;
         }
+        #endregion
     }
 }

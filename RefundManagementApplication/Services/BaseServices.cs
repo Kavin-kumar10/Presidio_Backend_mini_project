@@ -8,11 +8,14 @@ namespace RefundManagementApplication.Services
     {
         private readonly IRepository<int, T> _repo;
 
+        #region Constructor
         public BaseServices(IRepository<int, T> repo)
         {
             _repo = repo;
         }
+        #endregion
 
+        #region Create Multiple Entity
         public async Task<IList<T>> CreateMultiple(IList<T> Entities)
         {
             IList<T> list = new List<T>();  
@@ -27,6 +30,9 @@ namespace RefundManagementApplication.Services
             }
             throw new UnableToCreateException();
         }
+        #endregion
+
+        #region Create Entity
         public async virtual Task<T> Create(T Entity)
         {
             var result = await _repo.Add(Entity);
@@ -36,7 +42,9 @@ namespace RefundManagementApplication.Services
             }
             throw new UnableToCreateException();
         }
+        #endregion
 
+        #region Delete an Entity
         public async Task<T> Delete(int Key)
         {
             var result = await _repo.Delete(Key);
@@ -44,7 +52,9 @@ namespace RefundManagementApplication.Services
                 return result;
             throw new NotFoundException();
         }
+        #endregion
 
+        #region Get All Entity datas
         public async Task<IEnumerable<T>> GetAll()
         {
             var result = await _repo.Get();
@@ -54,7 +64,9 @@ namespace RefundManagementApplication.Services
             }
             throw new NotFoundException();
         }
+        #endregion
 
+        #region Get Entity by Id
         public async Task<T> GetById(int Key)
         {
             var result = await _repo.Get(Key);
@@ -64,7 +76,9 @@ namespace RefundManagementApplication.Services
             }
             return result;
         }
+        #endregion
 
+        #region Update Entity by new Entity
         public async Task<T> Update(T Entity)
         {
             var result = await _repo.Update(Entity);
@@ -74,5 +88,7 @@ namespace RefundManagementApplication.Services
             }
             throw new NotFoundException();
         }
+        #endregion
+
     }
 }
