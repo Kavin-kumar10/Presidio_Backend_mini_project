@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RefundManagementApplication.Exceptions.ActivationExceptions;
 using RefundManagementApplication.Exceptions.AuthExceptions;
 using RefundManagementApplication.Interfaces;
@@ -18,9 +19,11 @@ namespace RefundManagementApplication.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserServices _service;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserServices service) { 
+        public UserController(IUserServices service,ILogger<UserController> logger) { 
             _service = service;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -34,10 +37,12 @@ namespace RefundManagementApplication.Controllers
             try
             {
                 var result =  await _service.Register(registerrequestDTO);
+                _logger.LogInformation("Registering the User");
                 return Ok(result);
             }
             catch(MemberWithMailIdAlreadyFound mmaf)
             {
+                _logger.LogError(mmaf.Message);
                 return BadRequest(new ErrorModel(403, mmaf.Message));
             }
             catch (UnableToRegisterException utre) {
@@ -55,14 +60,17 @@ namespace RefundManagementApplication.Controllers
             try
             {
                 var result = await _service.Login(userloginDTO);
+                _logger.LogInformation("Loggin in the User");
                 return Ok(result);
             }
             catch (UserNotActiveException unae)
             {
+                _logger.LogError(unae.Message);
                 return BadRequest(unae.Message);
             }
             catch(UnauthorizedUserException uaue)
             {
+                _logger.LogError(uaue.Message);
                 return BadRequest(uaue.Message);
             }
         }

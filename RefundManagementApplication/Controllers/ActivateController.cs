@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using RefundManagementApplication.Exceptions;
 using RefundManagementApplication.Interfaces;
@@ -34,6 +35,7 @@ namespace RefundManagementApplication.Controllers
             try
             {
                 var res = await _service.Activate(MemberId,role,plan);
+                _logger.LogInformation($"Activating the Member : {MemberId}");
                 return Ok(res);
             }
             catch (NotFoundException unfe) {
@@ -56,6 +58,7 @@ namespace RefundManagementApplication.Controllers
             try
             {
                 var res = await _service.Deactivate(MemberId);
+                _logger.LogInformation($"Deactivating the Member : {MemberId}");
                 return Ok(res);
             }
             catch (NotFoundException unfe)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RefundManagementApplication.Exceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
@@ -12,8 +13,11 @@ namespace RefundManagementApplication.Controllers
     public class PaymentController : ControllerBase
     {
         IPaymentServices _paymentServices;
-        public PaymentController(IPaymentServices paymentServices) {
+        private ILogger<PaymentController> _logger;
+
+        public PaymentController(IPaymentServices paymentServices,ILogger<PaymentController> logger) {
             _paymentServices = paymentServices;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -25,9 +29,12 @@ namespace RefundManagementApplication.Controllers
             try
             {
                 var result = await _paymentServices.GetMyPayment(PaymentId);
+                _logger.LogInformation("Get Payment");
                 return Ok(result);
             }
             catch(NotFoundException nfe) {
+
+                _logger.LogError(nfe.Message);
                 return BadRequest(new ErrorModel(404, nfe.Message));
             }
         }
@@ -44,19 +51,23 @@ namespace RefundManagementApplication.Controllers
             try
             {
                 var result = await _paymentServices.CreatePaymentToRefund(AdminId,RefundId);
+                _logger.LogInformation("Refund Payement Processing");
                 return Ok(result);
             }
             catch(NotFoundException nfe)
             {
+                _logger.LogError(nfe.Message);
                 return BadRequest(new ErrorModel(404,nfe.Message));
             }
             catch (ForbiddenEntryException fee)
             {
+                _logger.LogError(fee.Message);
                 return BadRequest(new ErrorModel(403, fee.Message));
             }
             catch (Exception ex)
             {
-                 return BadRequest(new ErrorModel(401,ex.Message));
+                _logger.LogError(ex.Message);
+                return BadRequest(new ErrorModel(401,ex.Message));
             }
         }
     }

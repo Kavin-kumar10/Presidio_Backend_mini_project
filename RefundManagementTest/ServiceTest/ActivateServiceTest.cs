@@ -33,8 +33,6 @@ namespace RefundManagementTest.ServiceTest
             _MemberRepo = new MemberRepository(context);
             _UserRepo = new UserRepository(context);
             _service = new ActivateServices(_UserRepo,_MemberRepo);
-            //_tokenService = new TokenServices();
-            //_MemberService = new UserServices(_MemberRepo,_UserRepo);
 
 
             Member member = new Member()

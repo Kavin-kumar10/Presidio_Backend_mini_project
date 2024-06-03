@@ -16,15 +16,10 @@ namespace RefundManagementApplication
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 
             //builder.Services.AddLogging(l => l.AddLog4Net());
-
 
             #region Bearer
             builder.Services.AddSwaggerGen(option =>
@@ -93,9 +88,14 @@ namespace RefundManagementApplication
             //builder.Services.AddScoped<IServices<int, Payment>, PaymentServices>();
             builder.Services.AddScoped<IPaymentServices,PaymentServices>();
             builder.Services.AddScoped<IOrderServices,OrderServices>();
-            builder.Services.AddScoped<IRefundServices,RefundServices>();   
+            builder.Services.AddScoped<IRefundServices,RefundServices>();
             #endregion
 
+
+            builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
+            {
+                build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }));
 
             var app = builder.Build();
 
@@ -105,6 +105,8 @@ namespace RefundManagementApplication
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("corspolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();

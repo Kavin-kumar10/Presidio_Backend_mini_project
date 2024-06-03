@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RefundManagementApplication.Exceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
@@ -40,6 +41,7 @@ namespace RefundManagementApplication.Controllers
             try
             {
                 var result = await _orderService.GetAllRefundDecisionPendingOrders();
+                _logger.LogInformation("Getting Decision Pending Requests");
                 return Ok(result);
             }
             catch (NotFoundException nfe)
@@ -62,6 +64,7 @@ namespace RefundManagementApplication.Controllers
             try
             {
                 var result = await _orderService.GetAllRefundDecisionAcceptedOrders();
+                _logger.LogInformation("Getting Decision Accepted Requests");
                 return Ok(result);
             }
             catch (NotFoundException nfe)
