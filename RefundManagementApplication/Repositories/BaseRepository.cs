@@ -37,7 +37,7 @@ namespace RefundManagementApplication.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<T>> Get()
+        public virtual async Task<IEnumerable<T>> Get()
         {
             return await _context.Set<T>().ToListAsync();
         }

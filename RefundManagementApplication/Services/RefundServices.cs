@@ -85,5 +85,15 @@ namespace RefundManagementApplication.Services
         }
         #endregion
 
+        #region Get All Refund By Member Id
+        public async Task<IEnumerable<Refund>> GetAllRefundsById(int MemberId)
+        {
+            var refunds =  await _Repo.Get();
+            refunds = refunds.Where(r=>r.CreatedBy == MemberId);
+            return refunds;
+        }
+        #endregion
+
+
     }
 }

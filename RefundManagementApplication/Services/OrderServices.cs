@@ -88,5 +88,14 @@ namespace RefundManagementApplication.Services
         }
         #endregion
 
+        #region Get Orders by Member Id
+        public async Task<IEnumerable<Order>> GetOrdersByMemberId(int memberId)
+        {
+            var orders = await _repo.Get();
+            orders = orders.Where(o => o.MemberID == memberId).ToList();
+            return orders;
+        }
+        #endregion
+
     }
 }

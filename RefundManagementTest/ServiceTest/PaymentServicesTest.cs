@@ -69,7 +69,7 @@ namespace RefundManagementTest.ServiceTest
         [Test]
         public async Task Create_Payment_PassTest()
         {
-            var result = await _services.CreatePaymentToRefund(101, 1);
+            var result = await _services.CreatePaymentToRefund(101, 1,new Guid("476517a4-38cb-4c46-90e5-f415b43ef828"));
             Assert.That(result.RefundId, Is.EqualTo(1));
         }
 
@@ -78,7 +78,7 @@ namespace RefundManagementTest.ServiceTest
         {
             try
             {
-                var result = await _services.CreatePaymentToRefund(101,6);
+                var result = await _services.CreatePaymentToRefund(101,6,new Guid("lafdjk-12312-saffsa-1324-sadfdas"));
             }
             catch(Exception ex)
             {

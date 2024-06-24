@@ -7,6 +7,7 @@ using RefundManagementApplication.Exceptions.RefundExceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
 using RefundManagementApplication.Models.DTOs.RequestDTO.OrderReqDTOs;
+using RefundManagementApplication.Models.DTOs.RequestDTO.RefundReqDTOs;
 using RefundManagementApplication.Models.Enums;
 using RefundManagementApplication.Services;
 using System.Diagnostics.CodeAnalysis;
@@ -32,6 +33,26 @@ namespace RefundManagementApplication.Controllers
             _logger = logger;
         }
 
+
+        [HttpGet]
+        [Route("GetByMemberId")]
+        [ProducesResponseType(typeof(IEnumerable<Refund>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
+        public async Task<ActionResult<IEnumerable<Refund>>> Get(int MemberId)
+        {
+            try
+            {
+                var result = await _refundServices.GetAllRefundsById(MemberId);
+                _logger.LogInformation("Getting all the refunds by MemberId");
+                return Ok(result);
+            }
+            catch (NotFoundException nfe)
+            {
+                _logger.LogError(nfe.Message);
+                return BadRequest(new ErrorModel(404, nfe.Message));
+            }
+        }
 
         // Base CRUD Controllers
 
@@ -80,13 +101,13 @@ namespace RefundManagementApplication.Controllers
         [ProducesResponseType(typeof(Refund), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
         [ExcludeFromCodeCoverage]   
-        public async Task<ActionResult<Refund>> Create(int OrderId,String Reason)
+        public async Task<ActionResult<Refund>> Create(RefundRequestDTO refundDto)
         {
             try
             {
-                var result = await _refundServices.CreateRefund(OrderId, Reason);
-                await _orderServices.UpdateOrderStatus(OrderStatuses.Refund_Initiated,OrderId);
-                _logger.LogInformation($"Creating Refund with order id {OrderId}");
+                var result = await _refundServices.CreateRefund(refundDto.OrderId,refundDto.Reason);
+                await _orderServices.UpdateOrderStatus(OrderStatuses.Refund_Initiated,refundDto.OrderId);
+                _logger.LogInformation($"Creating Refund with order id {refundDto.OrderId}");
                 return Ok(result);
             }
             catch (UnableToCreateException utce)

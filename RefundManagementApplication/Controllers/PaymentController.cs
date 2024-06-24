@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using RefundManagementApplication.Exceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
+using RefundManagementApplication.Models.DTOs.RequestDTO.PaymentReqDTOs;
 using System.Diagnostics.CodeAnalysis;
 
 namespace RefundManagementApplication.Controllers
@@ -46,11 +47,11 @@ namespace RefundManagementApplication.Controllers
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ErrorModel),StatusCodes.Status401Unauthorized)]
         [ExcludeFromCodeCoverage]
-        public async Task<ActionResult<Payment>> RefundPayment(int AdminId,int RefundId)
+        public async Task<ActionResult<Payment>> RefundPayment(PaymentRequestDTO paymentRequestDTO)
         {
             try
             {
-                var result = await _paymentServices.CreatePaymentToRefund(AdminId,RefundId);
+                var result = await _paymentServices.CreatePaymentToRefund(paymentRequestDTO.AdminId,paymentRequestDTO.RefundId,paymentRequestDTO.TransactionId);
                 _logger.LogInformation("Refund Payement Processing");
                 return Ok(result);
             }

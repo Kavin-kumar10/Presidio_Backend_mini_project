@@ -75,6 +75,29 @@ namespace RefundManagementApplication.Controllers
         }
 
 
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        [Route("GetOrdersByMemberId")]
+        [ProducesResponseType(typeof(IEnumerable<Order>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+        [ExcludeFromCodeCoverage]
+
+        // Get Pending Products only for Collector - for further product Retrival process
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrdersByMemberId(int memberId)
+        {
+            try
+            {
+                var result = await _orderService.GetOrdersByMemberId(memberId);
+                _logger.LogInformation("Getting Orders with member id.");
+                return Ok(result);
+            }
+            catch (NotFoundException nfe)
+            {
+                _logger.LogError(nfe.Message);
+                return BadRequest(new ErrorModel(404, nfe.Message));
+            }
+        }
+
         [HttpPost]
         [Route("RefundDecision")]
         [Authorize(Roles = "Collector")]

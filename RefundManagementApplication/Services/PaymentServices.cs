@@ -49,7 +49,7 @@ namespace RefundManagementApplication.Services
         /// <returns></returns>
         /// <exception cref="NotFoundException"></exception>
         /// <exception cref="ForbiddenEntryException"></exception>
-        public async Task<Payment> CreatePaymentToRefund(int AdminId,int refundId)
+        public async Task<Payment> CreatePaymentToRefund(int adminId, int refundId, Guid transactionId)
         {
             //Get Refund
             var refund = await _refundRepo.Get(refundId);
@@ -74,13 +74,14 @@ namespace RefundManagementApplication.Services
                 TotalPayment = refund.RefundAmount,
                 Type = "NEFT",
                 UserId = order.MemberID,
+                TransactionId = transactionId,
                 PaymentDate = DateTime.Now
             };
             var result = await _repo.Add(payment);
 
             //UpdateStatus
             await _orderServices.UpdateOrderStatus(OrderStatuses.Refund_Completed, order.OrderId);
-            refund.ClosedBy = AdminId;
+            refund.ClosedBy = adminId;
             refund.PaymentId = result.PaymentId;
             await _refundRepo.Update(refund); 
             return result;
