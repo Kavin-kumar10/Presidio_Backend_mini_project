@@ -85,6 +85,8 @@ namespace RefundManagementApplication
             builder.Services.AddScoped<IServices<int, Order>, OrderServices>();
             builder.Services.AddScoped<IServices<int, Product>, ProductServices>();
             builder.Services.AddScoped<IServices<int, Refund>, RefundServices>();
+            builder.Services.AddScoped<IServices<int, Member>, MemberServices>();
+            builder.Services.AddScoped<IServices<int,User>, UserServices>();
             //builder.Services.AddScoped<IServices<int, Payment>, PaymentServices>();
             builder.Services.AddScoped<IPaymentServices,PaymentServices>();
             builder.Services.AddScoped<IOrderServices,OrderServices>();

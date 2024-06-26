@@ -1,5 +1,6 @@
 ﻿using RefundManagementApplication.Models.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace RefundManagementApplication.Models
 {
@@ -16,7 +17,9 @@ namespace RefundManagementApplication.Models
         public int? ClosedBy { get; set; }
         public Member? ClosedByMember { get; set; }
 
-        public int OrderId { get; set; }       
+        public int OrderId { get; set; }
+        [JsonIgnore]
+        public Order? Order { get; set; }
         public int? PaymentId { get; set; }
         public Payment? Payment { get; set; }
     }

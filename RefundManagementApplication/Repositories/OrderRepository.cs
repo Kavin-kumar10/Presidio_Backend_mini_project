@@ -13,7 +13,7 @@ namespace RefundManagementApplication.Repositories
         }
         public override async Task<IEnumerable<Order>> Get()
         {
-            var result = await _context.Orders.Include(o=>o.product).ToListAsync();
+            var result = await _context.Orders.Include(o=>o.product).Include(o=>o.OrderedBy).ToListAsync();
             return result;
         }
     }

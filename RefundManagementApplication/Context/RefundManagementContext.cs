@@ -57,7 +57,21 @@ namespace RefundManagementApplication.Context
               .HasForeignKey(o => o.MemberID) 
               .OnDelete(DeleteBehavior.Restrict) 
               .IsRequired();
-            
+
+            modelBuilder.Entity<Order>()
+            .Navigation(order => order.Refund)
+            .AutoInclude();
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Refund)
+                .WithOne(r => r.Order)
+                .HasForeignKey<Refund>(r => r.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+                .Navigation<Refund>(order=>order.Refund)
+                .AutoInclude();
+
             //modelBuilder.Entity<Refund>()
             //    .HasOne(r => r.Order)
             //    .WithOne(o => o.Refund)

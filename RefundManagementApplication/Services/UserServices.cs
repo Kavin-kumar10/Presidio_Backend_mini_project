@@ -12,16 +12,17 @@ using System.Text;
 
 namespace RefundManagementApplication.Services
 {
-    public class UserServices : IUserServices
+    public class UserServices : BaseServices<User>,IUserServices
     {
         private readonly IRepository<int, Member> _memrepo;
         private readonly IRepository<int,User> _userRepo;
         private readonly ITokenServices _tokenServices;
 
         #region Constructor
-        public UserServices(IRepository<int,Member> memrepo,IRepository<int,User> userRepo,ITokenServices tokenservices) {
+        public UserServices(IRepository<int, Member> memrepo, IRepository<int, User> repo, ITokenServices tokenservices) : base(repo)
+        {
             _memrepo = memrepo;
-            _userRepo = userRepo;
+            _userRepo = repo;
             _tokenServices = tokenservices;
         }
         #endregion

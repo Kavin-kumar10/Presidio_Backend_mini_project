@@ -106,12 +106,12 @@ namespace RefundManagementApplication.Controllers
         [ExcludeFromCodeCoverage]
 
         // Accept or Reject the Product
-        public async Task<ActionResult<Order>> RefundRequestDecision(int OrderId,bool decision)
+        public async Task<ActionResult<Order>> RefundRequestDecision(RefundDecisionDTO refundDecisionDTO)
         {
             try
             {
-                var reqOrder = await _service.GetById(OrderId);
-                if (decision)
+                var reqOrder = await _service.GetById(refundDecisionDTO.OrderId);
+                if (refundDecisionDTO.Decision)
                     reqOrder.OrderStatus = OrderStatuses.Refund_Accepted;
                 else
                     reqOrder.OrderStatus = OrderStatuses.Refund_Rejected;

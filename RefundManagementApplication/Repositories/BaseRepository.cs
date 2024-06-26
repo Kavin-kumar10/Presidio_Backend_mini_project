@@ -31,7 +31,7 @@ namespace RefundManagementApplication.Repositories
             return request;
         }
 
-        public async Task<T> Get(int key)
+        public virtual async Task<T> Get(int key)
         {
             var result = await _context.Set<T>().FindAsync(key);
             return result;

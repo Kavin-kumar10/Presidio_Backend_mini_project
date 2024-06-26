@@ -6,6 +6,7 @@ using Microsoft.Extensions.Primitives;
 using RefundManagementApplication.Exceptions;
 using RefundManagementApplication.Interfaces;
 using RefundManagementApplication.Models;
+using RefundManagementApplication.Models.DTOs.RequestDTO.ActivationReqDTOs;
 using RefundManagementApplication.Models.DTOs.ResponseDTO.Activation;
 using RefundManagementApplication.Models.Enums;
 using System.Diagnostics.CodeAnalysis;
@@ -30,12 +31,12 @@ namespace RefundManagementApplication.Controllers
         [ProducesResponseType(typeof(ActivateReturnDTO),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel),StatusCodes.Status404NotFound)]
         [ExcludeFromCodeCoverage]
-        public async Task<ActionResult<ActivateReturnDTO>> ActivateUser(int MemberId,MemberRole role,Plan plan)
+        public async Task<ActionResult<ActivateReturnDTO>> ActivateUser(ActivationReqDTO activationReqDTO)
         {
             try
             {
-                var res = await _service.Activate(MemberId,role,plan);
-                _logger.LogInformation($"Activating the Member : {MemberId}");
+                var res = await _service.Activate(activationReqDTO.MemberId,activationReqDTO.Role,activationReqDTO.Plan);
+                _logger.LogInformation($"Activating the Member : {activationReqDTO.MemberId}");
                 return Ok(res);
             }
             catch (NotFoundException unfe) {
